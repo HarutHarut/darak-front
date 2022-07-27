@@ -1,0 +1,23 @@
+.image-cell {
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    background-color: #f4f3ef;
+}
+
+.isTopDestination {
+
+    .topDestination {
+        display: none;
+    }
+
+    &.active {
+        .topDestination {
+            display: block;
+        }
+
+        .destination {
+            display: none;
+        }
+    }
+}

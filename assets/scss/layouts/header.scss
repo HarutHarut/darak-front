@@ -1,0 +1,453 @@
+.header {
+    background-color: transparent;
+    display: block;
+    position: fixed;
+    min-height: 80px;
+    color: $color-white;
+    font-weight: 600;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 99999999999;
+    transition: background-color .3s ease;
+
+    #buttonToggle {
+        display: none;
+    }
+
+    .navbar-toggler {
+        svg {
+            fill: $color-white;
+        }
+    }
+
+    .logo-black {
+        display: none;
+    }
+
+    .logo-white {
+        display: block;
+    }
+
+    .logo-link {
+        width: 200px;
+        height: 36px;
+        padding: 0;
+        margin-right: 30px;
+    }
+
+    .navbar {
+        min-height: 80px;
+        padding: 0;
+
+        .navbar-toggler {
+            border: none;
+        }
+    }
+
+    .navbar-nav {
+
+        .dropdown-menu {
+            position: absolute;
+            border-radius: 4px;
+        }
+
+        .dropdown-toggle {
+            color: $color-white;
+            @extend %transition-3;
+
+            svg {
+                fill: $color-white;
+                @extend %transition-3;
+            }
+
+            &::after {
+                display: none;
+            }
+
+            &:hover,
+            &:focus  {
+                color: $color-secondary;
+           
+                svg {
+                    fill: $color-secondary;
+                    color: $color-secondary;
+                }
+            } 
+        }
+
+        .dropdown {
+            &:not(:last-child) {
+                margin-right: 10px;
+            }
+        }
+    }
+
+    .navbar-collapse {
+
+        width: 100%;
+
+        .menu-item {
+            &:not(:last-child) {
+                margin-right: 15px;
+            }
+        }
+
+        .menu-link {
+            font-size: 14px;
+            font-weight: 800;
+            color: $color-white;
+            @extend %transition-3;
+
+            &:hover {
+                color: $color-secondary;
+            }
+
+            &.nuxt-link-exact-active,
+            &.active {
+                color: $color-secondary;
+                cursor: default;
+            }
+
+            &.btn-color {
+                font-size: 15px;
+                color: $color-white;
+
+                &:hover,
+                &:focus {
+                    color: $color-white;
+                }
+            }
+        }
+        &.show-menu {
+            display: block !important;
+        }
+    }
+
+    &-white-bg {
+        
+        background-color: $color-white;
+        color: $default-color;
+        // box-shadow: $shadow-bottom;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+        .logo-white {
+            display: none;
+        }
+
+        .logo-black {
+            display: block;
+        }
+
+        .navbar-nav {
+            .navbar-toggler {
+                svg {
+                    fill: $color-black;
+                }
+            }
+
+            .nav-link  {
+                color: $color-black;
+                
+                svg {
+                    fill: $color-black;
+                    color: $color-black;
+                }
+            }
+        }
+
+        .menu-link {
+            &.btn-color {
+                color: $color-white;
+                &:hover {
+                    color: $color-white;
+                }
+                &:focus {
+                    color: $color-white;
+                }
+            }
+        }
+        
+        .navbar-collapse { 
+            .menu-link {
+                color: $default-color;
+            }
+        }
+    }
+  
+}
+
+.dropdown-menu {
+    padding: 0;
+    margin: 0;
+    margin-top:20px;
+    min-width: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: $shadow-bottom;
+
+    .dropdown-item {
+        @extend %transition-3;
+        &:hover {
+            background-color: $color-secondary;
+            color: $color-white;
+        }
+
+        &:focus {
+            background-color: $color-secondary;
+            color: $color-white;
+        }
+    }
+}
+
+.menu-center {
+    .dropdown-menu {
+        padding-bottom: 10px;
+        left: -10px;
+        right: -10px;
+    }
+
+    .dropdown-item {
+        padding: 0 5px;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.menu-lang {
+    .dropdown-item {
+
+        img {
+            opacity: 0.85;
+            @extend %transition-3;
+        }
+
+        &:hover,
+        &:active {
+            background-color: transparent;
+           img {
+               opacity: 1;
+           }
+        }
+    }
+}
+
+.lang-img {
+    width: 20px;
+}
+
+/*----------Modal-form----------*/
+
+#modal-center {
+    .modal-content {
+        border-radius: 0.4em;
+        overflow: hidden;
+        border: none;
+    }
+    .modal-dialog {
+        max-width: 400px;
+    }
+    
+    .modal-body {
+        padding: 0;
+    }
+}
+
+.modal-sign-form {
+    font-size: 13px;
+
+    .tabs-content {
+        min-height: 500px;
+
+        .tab-content {
+            margin: auto 0;
+        }
+
+        .nav-tabs {
+            flex: 1;
+
+            li {
+                flex: 50%;
+            }
+        }
+
+        .nav-link {
+            color: $color-primary;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+        }
+    
+        .nav-tabs {
+            .nav-link {
+                &.active{
+                    background-color: $color-primary;
+                }
+            }
+        }
+
+        .btn {
+            min-height: 40px;
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    .header {
+        &.fixed {
+            background-color: $color-white;
+            color: $default-color;
+            // box-shadow: $shadow-bottom;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+            .logo-white {
+                display: none;
+            }
+
+            .logo-black {
+                display: block;
+            }
+
+            .nav-link  {
+                color: $color-black;
+                
+                svg {
+                    fill: $color-black;
+                    color: $color-black;
+                }
+            }
+
+            .navbar-toggler {
+                svg {
+                    fill: $color-black;
+                }
+            }
+
+            .menu-link {
+                color: $default-color;
+                &.btn-color {
+                    color: $color-white;
+                    &:hover {
+                        color: $color-white;
+                    }
+                    &:focus {
+                        color: $color-white;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 1024px) {
+    body.modal-open {
+        padding-right:0 !important;
+    }
+}
+
+@media (max-width: 1139px) {
+    .header {
+        .logo-link {
+            width: 130px;
+            height: auto;
+            margin-right: 15px;
+        }
+    }
+}
+
+@media (max-width: 991px) {
+    .header {
+        background-color: $color-white;
+        color: $default-color;
+        box-shadow: $shadow-bottom;
+
+        .navbar {
+            padding: 0;
+        }
+
+        .navbar-toggler {
+            padding: 0;
+            margin-left: 10px;
+        }
+
+        .navbar-toggler-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .navbar-collapse {
+            position: fixed;
+            left: 0;
+            top: 80px;
+            background-color: $color-white;
+            right: 0;
+            padding: 10px 20px;
+            box-shadow: $shadow-bottom;
+
+            .menu {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .menu-item {
+                margin-bottom: 15px;
+            }
+        }
+
+        .logo-white {
+            display: none;
+        }
+
+        .logo-black {
+            display: block;
+        }
+
+    
+        .navbar-nav {
+            .nav-link  {
+                color: $default-color;
+            }
+            .dropdown-toggle {
+                svg {
+                    fill: $default-color;
+                }
+            }
+        }
+
+        .navbar-toggler {
+            svg {
+                fill: $default-color;
+            }
+        }
+
+        .menu-link {
+            &.btn-color {
+                color: $color-white;
+                &:hover,
+                &:focus {
+                    color: $color-white;
+                }
+            }
+        }
+    }
+  
+}
+
+@media (max-width: 991px) {
+    #buttonToggle {
+        display: block !important;
+    }
+}
+
+@media (max-width: 1200px) {
+    .header { 
+        .navbar-collapse {
+            .menu-link {
+                font-size: 16px;
+            }
+        }
+    }
+}

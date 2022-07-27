@@ -1,0 +1,9 @@
+.user-link {
+    @extend %transition-8;
+    color: $color-secondary;
+
+    &:hover {
+        color: $color-secondary;
+        text-decoration: underline;
+    }
+}

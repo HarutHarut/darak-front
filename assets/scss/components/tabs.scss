@@ -1,0 +1,40 @@
+.tabs-content {
+    overflow: hidden;
+
+    .nav-tabs {
+        border: none;
+        height: 70px;
+        flex-wrap: nowrap;
+        background-color: $bg-color;
+    }
+     .nav-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 0;
+        position: relative;
+        height: 100%;
+        color: $color-secondary;
+    }
+
+    .nav-tabs .nav-link.active{
+        background-color: $color-secondary;
+        color: $color-white;
+        @extend %transition-8;
+    }
+
+    .nav-tabs .nav-link.active::before {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        height: 0;
+        width: 0;
+        border: 10px solid transparent;
+        border-bottom-color: $color-white;
+    }
+}

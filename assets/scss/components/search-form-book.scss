@@ -1,0 +1,106 @@
+.search-form-book {
+    max-width: 800px;
+
+    .search-location {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        line-height: 56px;
+        min-width: 40px;
+        cursor: pointer;
+        text-align: center;
+
+        svg {
+            fill: $color-grey-bold;
+        }
+    }
+
+    .form-input {
+        position: relative;
+        width: 40%;
+        height: 60px;
+
+        .search-location-input {
+            border: 1px solid #ced4da;
+            padding-left: 40px;
+        }
+    }
+
+    .datepicker-box {
+        width: 60%;
+        display: flex;
+        margin: auto;
+    }
+
+    .vue-daterange-picker {
+        width: 100%;
+    }
+
+    .btn-search {
+        min-width: 150px;
+        border-radius: 0 !important;
+    }
+}
+
+.vue-daterange-picker {
+    padding: 0;
+    width: 50%;
+    height: 60px;
+    border: none;
+    padding: 0;
+
+    .reportrange-text {
+        border: none;
+        border-radius: 0;
+        height: 100%;
+        padding: 0;
+    }
+
+    .rangepicker-icon {
+        text-align: center;
+        margin-right: 10px;
+
+        svg {
+            color: $color-grey-bold;
+        }
+    }
+
+    .rangepicker-text {
+        width: 100%;
+        padding-right: 15px;
+    }
+
+    .daterangepicker {
+        &.show-calendar .ranges {
+            display: none;
+        }
+    
+        .drp-buttons {
+            .drp-selected {
+                display: none;
+            }
+        } 
+
+        .cancelBtn {
+            background-color: $color-grey;
+            color: #fff;
+
+            &:hover {
+                color: $color-white;
+                background-color: darken($color-grey, 3%);
+                box-shadow: $shadow-bottom;
+            }
+        }
+        
+        .applyBtn {
+            background-color: $color-secondary;
+
+            &:hover {
+                color: $color-white;
+                background-color: darken($color-secondary, 3%);
+                box-shadow: $shadow-bottom;
+            }
+        }
+    }
+}

@@ -1,0 +1,47 @@
+#modal-working-hours {
+    legend,
+    .start-time,
+    .end-time {
+        font-size: 20px;
+    }
+
+    #datepicker-start {
+        color: $color-secondary;
+    }
+
+    #datepicker-end {
+        color: $color-secondary;
+    }
+}
+
+//Post
+
+.post {
+    border-bottom: 1px solid $color-grey-light;
+
+    .user-img {
+        width: 50px;
+        height: 50px;
+        padding: 2px;
+        border: 2px solid $color-grey-light;
+        border-radius: 50%;
+        overflow: hidden;
+
+        img {
+            border-radius: 50%;
+        }
+    }
+
+    .user-info{
+        font-size: 14px;
+    }
+
+    .username {
+        font-weight: 700;
+        color: $color-primary;
+    }
+}
+
+.business-alert-message {
+    border-radius: 12px;
+}

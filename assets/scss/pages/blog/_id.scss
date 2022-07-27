@@ -1,0 +1,18 @@
+.blog-single-page {
+    .blog-img-box {
+        height: 400px;
+        max-width: 450px;
+    }
+    .blog-description {
+        line-break: anywhere;
+    }
+}
+
+@media (max-width:767px) {
+
+    .blog-img-box {
+        height: 250px;
+        width: 100%;
+        margin-right: 0px !important;
+    }
+}

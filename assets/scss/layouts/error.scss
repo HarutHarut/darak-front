@@ -1,0 +1,21 @@
+.error-statusCode {
+    color: $color-secondary;
+    text-shadow: $shadow-text-error;
+    font-size: 60px;
+    font-weight: 600;
+}
+
+.error-img-box {
+    height: 400px;
+    img {
+        object-fit: contain;
+    }
+}
+
+.error-text {
+    color: $color-danger;
+
+}
+.error-text:first-letter{
+    text-transform: uppercase;
+}

@@ -1,0 +1,30 @@
+.chart-box {
+
+    .chart-name {
+        padding-left: 25px;
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+        }
+
+        &.canceled-chart {
+            &::before {
+                background-color: #ef5765;
+            }
+        }
+
+        &.approved-chart {
+            &::before {
+                background-color: #63e17f;
+            }
+        }
+    }
+    
+}

@@ -1,0 +1,321 @@
+.lockers {
+    
+    .title-primary {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .place-price {
+        font-size: 20px;
+        font-weight: 900;
+    }
+
+    .place-rating {
+        margin-bottom: 10px;
+    }
+
+    .rating-text {
+        color: $color-white;
+    }
+
+    .page-content-section {
+        .place-info {
+            font-size: 18px;
+        }
+    }
+
+    .lockers-description {
+        margin-bottom: 15px;
+    }
+
+    .search-form-book {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: $color-white;
+
+        .title-quaternary {
+           text-transform: none;
+           color: #212529;
+           text-align: left;
+           font-weight: bold;
+           padding: 20px;
+           padding-bottom: 10px;
+           font-size: 22px;
+        }
+
+        .count-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50px;
+            background: #015cba;
+            color: $color-white;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 20px;
+            padding-bottom: 2px;
+            cursor: pointer;
+        }
+
+        .count-inp {
+            display: inline-block;
+            border: none;
+            width: auto !important;
+            max-width: 25px;
+            padding: 0px;
+            text-align: center;
+            font-size: 18px;
+            background-color: transparent;
+        }
+
+        .form-select-box {
+            .daterangepicker.openscenter {
+                left: 20px !important;
+            }
+        }
+    }
+
+    .price-calc-block {
+        position: sticky;
+        top: 100px;
+        z-index: 999;
+        transition: .5s;
+        &.open {
+            display: block;
+        }
+    }
+
+    .form-select-box {
+        padding: 20px;
+        padding-top: 0px;
+        
+        .title-quaternary {
+            margin-bottom: 25px;
+            text-transform: none;
+        }
+
+        .datepicker-box {
+            width: 100%;
+            display: block;
+            .b-form-datepicker {
+                align-items: center;
+                border-radius: 10px;
+                button {
+                    svg {
+                        fill: #015cba;
+                        margin-top: 4px;
+                        display: block;
+                    }
+                }
+                label {
+                    font-size: 14px;
+                    margin-bottom: 0px !important;
+                    font-weight: 500;
+                    margin-left: -5px;
+                }
+            }
+            .datetimepicker {
+                width: 35%;
+                border-radius: 10px;
+                &::-webkit-scrollbar {
+                    width: 5px;
+                    border-radius: 10px;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background-color: #015cba;
+                    border-radius: 20px;
+                }
+                &::-webkit-scrollbar-track {
+                    background-color: #ced4da;
+                }
+            }
+        }
+    
+        .select {
+            width: 150px;
+        }
+    
+        input {
+            height: 40px;
+            max-width: 100px;
+        }
+    
+        .label-datepicker {
+            font-weight: bold;
+            width: 200px;
+            margin: 20px 15px 6px 0;
+        }
+
+        label {
+            font-weight: bold;
+            margin-right: 15px;
+            margin-bottom: 6px !important;
+        }
+
+        .count-block {
+            label {
+                margin-bottom: 0px !important;
+            }
+        }
+
+        .price-calc-total-price {
+            font-size: 18px;
+            margin-top: 35px;
+        }
+
+        .add-size-btn {
+            color: $color-secondary;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .cancel-icon {
+            fill: $color-danger;
+            cursor: pointer;
+            border: 1px solid $color-danger;
+            border-radius: 50px;
+            padding: 4px;
+        }
+    }
+}
+
+/*----------Responsive image gallery-----------*/
+
+.img-container {
+    height: 150px;
+    float: left;
+    width: 25%;
+    padding-right: 5px;
+    overflow: hidden;
+    margin-bottom: 5px;
+    cursor: pointer;
+  
+    &:first-child {
+        height: 305px;
+        width: 50%;
+    }
+
+    &:last-child {
+        position: relative;
+
+        &::before {
+            right: 5px;
+        }
+        
+        .img-caption {
+            position: absolute;
+            display: block;
+            @extend %transform-center;
+            white-space: nowrap;
+            right: 5px;
+            font-size: 18px;
+            color: $color-white;
+            z-index: 3;
+        }
+    }
+}
+
+.price-list-table {
+    text-align: center;
+
+    thead {
+        background-color: $color-primary;
+        color: $color-white;
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: 1.8;
+    }
+
+    tbody {
+      
+        background-color: $bg-color;
+        tr:nth-child(even) {
+            background-color: $bg-light;
+        }
+    }
+}
+
+.reviews-section {
+
+    .review {
+        position: relative;
+        margin-bottom: 10px;
+        padding: 20px 30px;
+        @extend %b-radius;
+        background-color: $color-white;
+        overflow: hidden;
+        box-shadow: $shadow-card;
+    }
+
+    .review-name {
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 16px;
+    }
+
+    .review-country {
+        font-size: 12px;
+    }
+
+    .review-img {
+        margin-right: 10px;
+        width: 50px;
+        height: 50px;
+        img {
+            border-radius: 50px;
+        }
+    }
+
+    .review-date {
+        color: #adb5bd;
+        font-weight: 500;
+        font-size: 14px;
+    }
+}
+
+.mobile-price-calc-btn {
+    position: fixed;
+    top: 50%;
+    transform: translate(-50%, 0px);
+    right: 0px;
+    display: none;
+    width: 50px;
+    height: 50px;
+    background-color: $color-primary;
+    color: $color-white;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px 0px 0px 4px;
+    margin-top: 3px;
+    z-index: 99;
+    // display: flex;
+}
+
+.mobile-price-calc-btn svg {
+    fill: $color-white;
+}
+
+@media (max-width: 991px) {
+    .mobile-price-calc-btn {
+        display: flex;
+    }
+    .price-calc-block {
+        float: none !important;
+        margin-top: 30px !important;
+        position: unset !important;
+        top: 0px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .img-container {
+        width: 50%;
+
+        &:first-child {
+            width: 100%;
+        }
+    }
+}

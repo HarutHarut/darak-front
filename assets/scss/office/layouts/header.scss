@@ -1,0 +1,113 @@
+.office-header {
+    width: 100%;
+    flex-basis: 80px;
+    height: 80px;
+    background-color: $color-primary;
+
+    .logo-box {
+        width: 240px;
+        background-color: #034b97;
+        @extend %transition-3;
+        text-align: center;
+        font-size: 24px;
+
+        a {
+            color: $color-white;
+        }
+    
+        .logo-img {
+            margin-top: -5px;
+            width: 140px;
+        }
+    
+        .menu-burger {
+            position: relative;
+            top: -3px;
+            fill: $color-grey-light-1;
+        }
+    }
+
+    .dropdown-toggle::after {
+        display: none;
+    }
+
+    .dropdown {
+
+        &.show {
+
+            .dropdown-menu {
+                position: absolute;
+                left: -150px;
+                padding: 0;
+                margin: 0;
+                margin-top: 20px;
+                font-size: 14px;
+                box-shadow: $shadow-bottom;
+                border: none;
+                border-radius: 0;
+            }
+
+        }
+    }
+}
+
+.notification-img {
+    position: relative;
+
+    svg {
+        fill: $color-grey-light-1;
+    }
+
+    .message {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background-color: red;
+        border-radius: 50%;
+        right: 2px;
+        top: 3px;
+        text-align: center;
+    }
+}
+
+.user {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid $color-grey;
+    overflow: hidden;
+    box-shadow: $shadow-bottom;
+}
+
+.balance-btn {
+    background: $color-white;
+    padding: 4px 15px;
+    border-radius: 5px;
+    margin-right: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    color: $color-primary;
+    box-shadow: 0px 0px 6px 0px rgb(255 255 255 / 20%);
+    svg {
+        margin-right: 8px;
+        fill: $color-primary;
+    }
+    &:hover {
+        color: $color-primary;
+        box-shadow: 0px 0px 12px 5px rgb(255 255 255 / 30%);
+    }
+}
+
+@media (max-width: 991px) {
+
+    .office-header .logo-box {
+        width: 70px;
+
+        .logo-img {
+            display: none;
+        }
+    }
+}

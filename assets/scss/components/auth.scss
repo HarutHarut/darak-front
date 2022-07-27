@@ -1,0 +1,137 @@
+#modal-sign {
+    .modal-body {
+        padding: 0;
+    }
+}
+
+.modal-content {
+    overflow: hidden;
+}
+
+.modal-leftside {
+    color: $color-white;
+    background-color: #015cba;
+    background-image: url(/_nuxt/assets/img/bagage-bg.png);
+    background-size: 100%;
+    height: 100%;
+    background-position: bottom left;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    border-right: 1px solid #fff;
+
+    .img-box {
+        img {
+            width: 150px;
+        }
+    }
+}
+
+.author-form {
+    .form-group {
+        margin-bottom: 1.2rem;
+
+
+        &.form-error {
+            margin-bottom: 10px;
+            .error-text {
+                display: block;
+                margin-top: 2px;
+                font-size: 12px;
+                color: $color-danger;
+                padding-left: 5px;
+            }
+
+            input {
+                border-color: $color-danger;
+            }
+
+            svg {
+                fill: $color-danger;
+                color: $color-danger;
+            }
+        }
+    }
+
+    .form-input-box {
+        position: relative;
+        width: 100%;
+        height: 45px;
+
+        svg {
+            color: $color-grey-light-1;
+            fill: $color-grey-light-1;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            text-align: center;
+            margin: auto 0;
+            width: 40px;
+            &.eye-icon {
+                left: unset;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                bottom: unset;
+                width: 15px;
+                height: 15px;
+                fill: #8d8282;
+                color: #8d8282;
+            }
+        }
+    }
+
+    .form-input {
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding: 0 10px 0 40px;
+        background-color: transparent;
+        border: none;
+        background-color: $color-white;
+        border: 1px solid $color-grey-light-1;
+    }
+
+    .btn {
+        border-radius: 0;
+    }
+    &.become-partner-register {
+        .form-group {
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+.input-required {
+    label {
+        &::after {
+            content: "*";
+            margin-left: 5px;
+            display: inline-block;
+            color: red;
+        }
+    }
+}
+
+.valid-form {
+    label {
+        &::after {
+            display: none;
+        }
+    }
+}
+
+.observer{
+    width: 100%;
+}
+.form-input-box{
+    span{
+        width: 100%;
+    }
+}
+
+.forgot-password-link {
+    display: block;
+    margin-bottom: 20px;
+}

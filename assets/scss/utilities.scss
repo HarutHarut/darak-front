@@ -1,0 +1,35 @@
+%b-radius {
+    border-radius: 12px;
+}
+
+%transition-3 {
+    transition: all .3s ease;
+}
+
+%transition-5 {
+    transition: all .5s ease;
+}
+
+%transition-8 {
+    transition: all .8s ease;
+}
+
+%bg-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: no-repeat;
+}
+
+%text-ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+%transform-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

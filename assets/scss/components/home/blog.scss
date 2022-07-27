@@ -1,0 +1,43 @@
+.blog-card {
+  color: $default-color;
+  @extend %b-radius;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-color: $bg-color;
+  @extend %transition-5;
+
+  .blog-card-img {
+    overflow: hidden;
+    height: 200px;
+
+    img {
+      transform: scale(1.1);
+      @extend %transition-5;
+    }
+  }
+
+  &:hover .blog-card-img img {
+    transform: scale(1.3);
+  }
+
+  .title-teriary {
+    font-weight: 500;
+    margin-bottom: 10px;
+    @extend %text-ellipsis;
+  }
+}
+
+.blog-about {
+  padding: 10px 15px;
+  width: 100%;
+
+  svg {
+    margin-right: 10px;
+    fill: $color-secondary;
+    color: $color-secondary-light;
+  }
+}
+
+
+

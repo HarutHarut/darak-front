@@ -1,0 +1,23 @@
+.addLockerPrice {
+    top: 20px !important;
+    right: 16px !important; 
+    box-shadow: unset !important;
+}
+
+.office-page-table table {
+    border: 2px solid #dee2e6;
+} 
+
+.remove-package-icon {
+    position: relative;
+    padding: 15px;
+    svg {
+        fill: $color-danger;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0px;
+        left: 0px;
+        margin: 0px auto;
+    }
+}

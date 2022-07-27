@@ -1,0 +1,25 @@
+.faq-section {
+    
+    .question{
+        button {
+            font-size: 18px;
+            font-weight: 600;
+            color: $default-color;
+            border-bottom: 1px solid #ddd !important;
+            margin-bottom: 6px;
+        }
+    }
+
+    .card {
+        // background-color: $bg-color;
+        border: 0;
+        border-radius: 0.25rem;
+    }
+
+    button {
+        svg {
+            fill: $color-secondary;
+        }
+    }
+
+}

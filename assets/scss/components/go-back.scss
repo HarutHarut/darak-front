@@ -1,0 +1,40 @@
+.btn-back {
+    color: $color-secondary;
+    @extend %transition-3;
+    svg {
+        fill: $color-secondary-light;
+        @extend %transition-3;
+    }
+
+    .go-back-text {
+        font-size: 20px;
+        @extend %transition-3;
+    }
+
+    &:hover {
+        color: darken($color-secondary, 10%);
+    }
+}
+
+.go-back-square {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+
+    .btn-back {
+        padding: 10px 15px;
+    }
+
+    .go-back-text {
+        display: none;
+    }
+
+    &:hover {
+        background-color: $color-secondary;
+    }
+
+    &:hover svg {
+        color: $color-white;
+    }
+}

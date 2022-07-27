@@ -1,0 +1,210 @@
+.place-view {
+    position: relative;
+    height: 300px;
+    
+    .title-primary {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        font-size: 24px;
+        @extend %text-ellipsis;
+    }
+
+    .place-price {
+        font-size: 30px;
+        font-weight: bolder;
+    }
+
+    .rating-text {
+        color: $color-white;
+    }
+    
+    .place-address {
+        color: $color-white;
+    }
+}
+
+.place-tabs {
+
+    .nav-link {
+        svg {
+            fill: $color-grey;
+            color: grey;
+        }
+
+        &.active {
+            svg {
+                fill: $color-white;
+                color: $color-white;
+            }
+        }
+    }
+
+    .place-tab-content {
+        height: calc(100vh - 440px);
+        padding: 15px;
+        overflow-y: scroll;
+
+        &.scroll-box {
+            @include scrollbars(5px, $color-secondary, $color-grey-light-1);
+        }
+    }
+
+    .place-title {
+        margin-bottom: 15px;
+    }
+}
+
+/* ----------Home---------- */
+
+.home-tab {
+    .prices-list {
+
+        li {
+            color: $color-grey;
+            margin-bottom: 10px;
+            padding-left: 5px;
+            background-color: $bg-color;
+        }
+    
+        .price-value {
+            color: $color-secondary;
+            font-size: 18px;
+            font-weight: 900;
+        }
+    }
+}
+
+/* ----------Review---------- */
+
+.reviews-tab {
+    .average-rating {
+        .rate-of-average {
+            font-weight: 600;
+        }
+        .reviews-total {
+            color: $color-grey;
+        }
+    }
+
+    .rating-bars {
+        font-size: 12px;
+        width: 100%;
+
+        .rating-bar  {
+            margin-bottom: 15px;
+        }
+
+        .rating-label {
+            @extend %text-ellipsis;
+            width: 60px;
+        }
+
+        .progress-bar {
+            position: relative;
+            height: 10px;
+            width: 100%;
+            background-color: $bg-light;
+            
+            .progress {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                background-color: $color-secondary;
+                @extend %transition-5;
+                border-radius: 0;
+            }
+        }
+
+        .rating-percentage {
+            width: 50px;
+            text-align: right;
+        }
+    }
+}
+
+/* ----------Location---------- */
+
+.location-tab {
+    .place-addres {
+        white-space: nowrap;
+    }
+}
+
+/* ----------Gallery---------- */
+
+.gallery-tab {
+    .gallery-lightbox {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 15px 15px 70px;
+
+        .gallery-img {
+            width: 120px;
+            height: 120px;
+            overflow: hidden;
+            margin: 5px;
+            margin-bottom: 0;
+            @extend %b-radius;
+            box-shadow: $shadow-image;
+            cursor: pointer;
+    
+            &:active {
+                border: 1px solid $color-primary;
+            }
+    
+            &:first-child {
+                border: 2px solid $color-secondary-light;
+            }
+        }
+    }
+}
+
+/* ----------Links---------- */
+.home-tab {
+
+    .social {
+        margin: 30px 0;
+    }
+
+    .social-item {
+        margin-bottom: 15px;
+    }
+
+    .social-link {
+        color: $color-secondary;
+        background-color: $bg-color;
+
+        &:hover {
+            color: $color-white;
+            background-color: $color-secondary;
+        }
+    }
+}
+
+@media (max-width: 991px) {
+    .place-view {
+        height: 200px;
+
+        .banner {
+            min-height: 200px;
+        }
+    }
+    
+    .place-tabs {
+        .place-tab-content {
+            height: calc(100vh - 270px);
+    
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .map-single-page {
+        
+        .map-sidebar {
+            width: 100% !important;
+        }
+    }
+}

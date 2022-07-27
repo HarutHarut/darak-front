@@ -1,0 +1,14 @@
+stages:
+  - deploy
+deploy-to-xsoft-upcloud-server:
+  stage: deploy
+  script:
+   - echo "VUE_APP_BASE_URL=http://api-luglockers.xsoft.am" > .env
+   - npm install
+   - npm run build
+   - pm2 restart luglockers
+  environment:
+    name: development
+    url: https://luglocker.xsoft.am
+  only:
+    - main

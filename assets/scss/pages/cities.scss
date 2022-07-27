@@ -1,0 +1,44 @@
+.city-cards {
+    .city-card-item {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .city-card-link {
+        @extend %b-radius;
+        // background-color: $bg-color;
+        // box-shadow: $shadow-bottom;
+        height: 100px;
+        overflow: hidden;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        padding-right: 10px;
+        align-items: center;
+    }
+
+    .city-card-img {
+        height: 100%;
+        width: 100px;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .city-card-title {
+        font-size: 18px;
+        font-weight: 600;
+        white-space: pre-wrap;
+        padding-left: 10px;
+        @extend %text-ellipsis;
+    }
+
+    .form-input {
+        height: 40px;
+        color: $color-grey-bold;
+        border-radius: 4px;
+    }
+}
+
+.no-result {
+    font-size: 1.4rem;
+    color: $color-secondary;
+}

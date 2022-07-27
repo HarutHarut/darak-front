@@ -1,0 +1,56 @@
+.page-title-box {
+    .icon-box {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid #1f303f;
+
+        svg {
+            fill: $color-primary;
+            color: $color-primary;
+        }
+    }
+}
+
+.page-content-top {
+    margin-bottom: 30px;
+
+    .search-form-book {
+       max-width: 300px;
+    }
+}
+
+.office-search-form {
+    .form-book {
+        position: relative;
+    }
+
+    .form-group {
+        max-width: 200px;
+    
+        .form-input {
+            padding: 7px 30px 7px 15px;
+            border: 1px solid $color-grey-light-1;
+        }
+    }
+
+    .btn-search {
+        position: absolute;
+        top: 0;
+        right: 5px;
+        bottom: 0;
+        margin-left: auto;
+
+        svg {
+            fill: $color-grey-light-1;
+        }
+    }
+}
+
+.sidebar-dropdown {
+    position: relative;
+    .when-opened {
+        top: 10px;
+        right: 8px;
+    }
+}

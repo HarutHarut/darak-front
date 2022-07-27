@@ -1,0 +1,158 @@
+.storage-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+
+    &-box {
+        overflow: hidden;
+        color: $color-white;
+        width: 100%;
+        height: 100%;
+
+        img {
+            position: relative;
+            @extend %transition-3;
+            width: 100%;
+            transform: scale(1.01);
+        }
+
+        &:hover > img  {
+            transform: scale(1.2);
+        }
+
+        &:hover .storage-card-description {
+            color: $color-white;
+            opacity: .6;
+        }
+    }
+
+    .storage-card-description {
+        max-width: 90%;
+        font-size: 14px;
+        padding: 15px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 2;
+        @extend %transition-3;
+        span {
+            @extend %text-ellipsis;
+        }
+    }
+
+    .card-location-text {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        z-index: 2;
+        background-color: $color-secondary;
+        color: $color-white;
+        font-size: 14px;
+        height: 30px;
+        padding: 0 10px;
+        @extend %transition-3;
+        border-radius: 6px;
+
+        &:hover {
+            background-color: $color-secondary-light;
+        }
+    }
+
+    .type-box {
+        position: absolute;
+        perspective: 1000px;
+        top: 0;
+        right: 0;
+        height: 60px;
+        width: 60px;
+        background-color: transparent;
+        z-index: 2;
+
+        &-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            
+            .type-box-body {
+                position: absolute;
+                color: $color-white;
+                text-align: center;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                line-height: 60px;
+                overflow: hidden;
+                @extend %b-radius;
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                transform-style: preserve-3d;
+                @extend %transition-8;
+                border-bottom-left-radius: 12px;
+            }
+
+            .type-box-front {
+                background-color: $color-secondary;
+                transform: rotateY(0);
+            }
+
+            .type-box-back {
+                background-image: url(~assets/img/logo/logo-square.jpg);
+                background-color: $color-secondary;
+                background-position: 100%;
+                background-repeat: no-repeat;
+                background-size: cover;
+                transform: rotateY(-180deg);
+            }
+        }
+
+        &:hover .type-box-front {
+            transform: rotateY(-180deg);
+        }
+
+        &:hover .type-box-back {
+            transform: rotateY(0);
+        }         
+    }
+}
+
+.place-address {
+    font-size: 14px;
+    span {
+        @extend %text-ellipsis;
+    }
+
+    svg {
+        margin-right: 10px;
+    }
+}
+
+.place-price {
+    font-weight: bold;
+    color: $color-secondary;
+    font-size: 14px;
+}
+
+.place-rating {
+    & span:not(.rating-text) {
+        color: $color-secondary;
+    }
+
+    .rating-text {
+        font-size: 10px;
+    }
+
+    .rating-review {
+       margin-right: 10px;
+    }
+}
+
+.rating-stars {
+    margin-right: 10px;
+
+    svg {
+        margin-right: 3px;
+        color: $color-secondary;
+    }
+}

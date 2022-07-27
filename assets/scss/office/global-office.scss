@@ -1,0 +1,626 @@
+//Use global styles
+
+.form-control {
+    border-radius: 10px !important;
+}
+
+.office-page-wrapper {
+    max-width: 100%;
+}
+
+.office-page-main {
+    height: calc(100vh - 80px);
+    width: 100%;
+    background-color: #f4f3ef;
+    overflow-y: scroll;
+    @include scrollbars(5px, #1f303f, $color-grey-light-1);
+    transition: padding-left 0.3s ease;
+    &.paddingLeft {
+        padding-left: 240px;
+    }
+
+    .static-section {
+        border: 1px solid $color-primary;
+        margin-bottom: 30px;
+        box-shadow:  $shadow-bottom;
+        background-color: $color-white;
+        border-radius: 12px;
+        overflow: hidden;
+
+        .title-box {
+            color: $color-white;
+            background-color: $color-primary;
+
+            svg {
+                fill: $color-white;
+                padding: 4px;
+            }
+        }
+    }
+
+    .orders-table {
+        margin-bottom: 0;
+    }
+
+    .title {
+        margin-bottom: 0;
+    }
+
+    @media (min-width: 576px) {
+
+        .form-select-box {
+            .daterangepicker.openscenter {
+                left: 20px !important;
+            }
+        }
+    }
+}
+
+.office-page-table {
+    position: relative;
+
+    td:not(:last-child), th:not(:last-child) {
+        border-right: 1px solid #dee2e6;
+    }
+
+    input {
+        min-width: 80px;
+        height: 40px;
+    }
+}
+
+//Collapse section with icon
+
+.when-opened {
+    // position: absolute;
+    // top: 33px;
+    // right: 25px;
+
+    svg {
+        @extend %transition-5;
+    }
+}
+
+.collapsed > .when-opened svg {
+    transform: rotate(0deg);
+}
+
+:not(.collapsed) > .when-opened svg {
+transform: rotate(180deg);
+}
+
+//Static-table
+
+.static-table {
+    margin-bottom: 1rem;
+    color: #212529;
+    text-align: center;
+
+    thead th {
+        color:$color-primary-light;
+        vertical-align: middle;
+    }
+    th, td {
+        vertical-align: middle;
+    }
+
+    th, td {
+        padding: 8px 10px;
+    }
+
+    td:not(:last-child), th:not(:last-child) {
+        border-right: 1px solid #dee2e6;
+    }
+
+    tr:nth-child(even) {
+        background-color: $bg-light;
+    }
+
+    thead th:last-child {
+        vertical-align: middle;
+    }
+
+}
+
+//Base card
+
+.base-card {
+    border-top: 3px solid $color-primary;
+    box-shadow: $shadow-bottom;
+    @extend %b-radius;
+
+    .card-img {
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+    }
+}
+
+.card-list {
+    li {
+        padding: 10px 0;
+        border-bottom: 1px solid $color-grey-light;
+    }
+    .item-title {
+        font-weight: bold;
+    }
+}
+
+.card-body {
+    position: relative;
+
+    .btn-close {
+        color: $color-secondary;
+    }
+
+    .btn-open {
+        color: $color-primary ;
+    }
+}
+
+//Modal form, radio button, checkbox
+
+.custom-control-label {
+    &::before {
+        border-color: $color-secondary;
+    }
+} 
+
+.custom-control-input {
+    &:not(:disabled) {
+        &:active {
+            & ~ .custom-control-label {
+                &::before {
+                    color: #fff;
+                    background-color: $color-secondary;
+                    border-color: $color-secondary;
+                }
+            }
+        }
+    }
+}
+
+.custom-control-input {
+    &:checked {
+        & ~ .custom-control-label {
+            &::before {
+                color: #fff;
+                border-color: $color-secondary;
+                background-color: $color-secondary;
+                box-shadow: none;
+            }
+        }
+    }
+}
+
+.custom-control-input {
+    &:focus  {
+        & ~ .custom-control-label {
+            &::before {
+                border-color: $color-secondary;
+                box-shadow: none;
+            }
+        } 
+    }
+} 
+
+.custom-control-input {
+    &:focus {
+        &:not(:checked) {
+            & ~ .custom-control-label {
+                &::before {
+                    border-color: $color-secondary;
+                }
+            } 
+        }
+    } 
+}
+
+.form-box {
+    input {
+        height: 40px !important;
+    }
+}
+
+.input-box {
+    position: relative;
+
+    .input-text {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 40px;
+        width: 40px;
+        color: $color-white;
+        font-weight: bold;
+        text-align: center;
+        background-color: $color-secondary-light;
+        border-radius:0  0.25em 0.25em 0;
+        line-height: 40px;
+    }
+
+    input {
+        padding-right: 40px;
+        min-width: 120px;
+        border-radius: 10px;
+    }
+}
+
+.total-price {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25em;
+    background-clip: padding-box;
+}
+
+.b-time-header {
+    display: none;
+}
+
+.b-time-footer {
+    display: none;
+}
+
+#datepicker-start,
+#datepicker-end {
+    display: flex;
+    align-items: center;
+}
+
+.form-control.focus {
+    box-shadow: none;
+    border-color: $color-secondary;
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+}
+
+
+tr {
+    td {
+        .tooltip-box {
+            position: absolute;
+            background-color: $bg-color;
+            box-shadow: 0 0 10px $color-primary-light;
+            border-radius: 4px;
+            text-align: center;
+            top: 20px;
+            width: 200px;
+            visibility: hidden;
+            display: none;
+            z-index: 10;
+        
+            .total {
+                color: $color-primary;
+                position: relative;
+                padding-left: 20px;
+        
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 10px;
+                    left: 0;
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    background-color: $color-primary-light;
+                    box-shadow: $shadow-bottom;
+                }
+            }
+        }
+    
+        &:not(:first-child):not(:nth-child(2)) {
+            .tooltip-box {
+                right: 60%;
+            }
+        }
+    }
+}
+
+
+tr {
+    td {
+        &:first-child,
+        &:nth-child(2) {
+            .tooltip-box {
+                left: 50%;
+            }
+        }
+    }
+}
+
+/*--------------------Table cells--------------------*/
+
+.approved-cell {
+    background-color: #63e17f;
+}
+
+.ordered-cell {
+    background-color: #ef5765;
+}
+
+.book-cell {
+    background-color: #6aaff9;
+}
+
+.bookingColor{
+    a{
+        color: #4d7aa7;
+    }
+}
+
+.edit-cell {
+    padding: 0;
+    text-align: center;
+    svg {
+        fill: $color-secondary;
+    }
+}
+
+.cancel-cell,
+.view-cell {
+    padding: 5px 7px;
+    vertical-align: middle;
+}
+
+
+
+.cancel-cell {
+    svg {
+        fill: var(--danger);
+    }
+}
+
+.view-cell {
+    svg {
+        fill: var(--success);
+    }
+} 
+
+.btn-edit {
+    position: absolute;
+    right: 6px;
+    top: 8px;
+    padding: 7px;
+    box-shadow: $shadow-bottom;
+
+    svg {
+       fill: $color-white;
+    }
+}
+
+.btn-add {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    box-shadow: $shadow-bottom;
+    background: $color-secondary;
+    border-radius: 5px;
+    padding: 7px;
+    display: flex;
+
+    svg {
+        fill: $color-white;
+    }
+}
+
+.btn-calculate {
+    font-size: 17px;
+    margin-top: 11px;
+    text-align: left;
+    color: $color-primary;
+
+    .icon-box {
+        @extend %transition-3;
+
+        svg {
+            fill: $color-primary;
+            width: 9px;
+        }
+    }
+
+    &:hover .icon-box {
+       padding-left: 14px;
+    }
+}
+
+.btn-cancel {
+    color: var(--danger);
+}
+
+.inbox-text {
+    @extend %text-ellipsis;
+    width: 500px;
+}
+
+
+/*--------------------Image upload box--------------------*/
+
+.image-upload-box {
+    border: 1px dashed #1f303f;
+    border-radius: 5px;
+    background-color: $bg-color;
+
+    .upload-preview {
+        width: 70px;
+        height: 70px;
+        overflow: hidden;
+    }
+
+    label {
+        color: $color-primary;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+    }
+
+    input {
+        display: none;
+    }
+
+    &.multiple-upload {
+
+        label {
+            color: $color-primary;
+            img {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        .upload-img-content {
+            min-height: 150px;
+            background-color: $bg-color;
+
+            li {
+                padding: 10px;
+
+                .img {
+                    position: relative;
+                    border: 4px solid $color-grey-light-1;
+
+                    .close {
+                        position: absolute;
+                        right: 5px;
+                        top: 0;
+                        color: var(--danger);
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+        .image {
+            max-width:  150px;
+            height: 150px;
+            object-fit: contain;
+            padding: 10px;
+        }
+    }
+}
+
+.read-mail-card {
+
+    .btn {
+        border: 1px solid $color-grey-light!important;
+        border-radius: 2px;
+    }
+}
+
+.pagination {
+    height: 40px;
+
+    .page-item {
+        height: 100%;
+    }
+    
+    .page-link {
+        font-size: 16px;
+        min-width: 70px;
+        height: 100%;
+        color: $default-color;
+    
+        svg {
+            fill: $color-primary;
+        }
+    
+        &:focus {
+            box-shadow: none;
+            border-color: $color-primary;
+            background-color: $color-primary;
+            color: $color-white;
+    
+            svg {
+                fill: $color-white;
+            }
+        }
+    
+    }
+}
+
+@media (min-width: 1024px) {
+    body.modal-open {
+        padding-right: 0 !important;
+    }
+}
+
+@media (max-width: 991px) {
+    .office-page-main {
+        &.paddingLeft {
+            padding-left: 70px;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+
+    .dashboard-page-main {
+
+        .daterangepicker {
+            min-width: 270px;
+
+            .calendars-container {
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+            }
+
+            &.openscenter {
+                left: 40px;
+            }
+        } 
+    }
+}
+
+.tooltipNet {
+    position: relative;
+    display: inline-block;
+    //border-bottom: 1px dotted black;
+    .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+    }
+    &:hover {
+        .tooltiptext {
+            visibility: visible;
+        }
+    }
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #015cba;
+    border-radius: 20px;
+}
+::-webkit-scrollbar-track {
+    background-color: #ced4da;
+}
+
+.vue-phone-number-input {
+    .input-tel__input {
+        border-top-right-radius: 10px !important;
+        border-bottom-right-radius: 10px !important;
+    }
+    .country-selector__input {
+        border-top-left-radius: 10px !important;
+        border-bottom-left-radius: 10px !important;
+    }
+}
+
+.form-box .form-group svg {
+    width: 15px;
+    cursor: pointer;
+}

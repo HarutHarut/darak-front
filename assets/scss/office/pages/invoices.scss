@@ -1,0 +1,119 @@
+.invoices-section {
+    .year-btn {
+        background-color: #fff;
+        box-shadow: $shadow-image;
+        color: $default-color;
+        font-weight: 500;
+        width: 100%;
+        padding: 10px; 
+        font-size: 18px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        &:hover {
+            background-color: $color-primary;
+            color: #fff;
+        }
+        &.active {
+            background-color: $color-primary;
+            color: #fff;
+        }
+    }
+
+    .note-block {
+        border-radius: 4px;
+        border: 1px solid $color-secondary;
+        background-color: $color-secondary-light;
+        color: $color-white;
+        padding: 10px;
+        margin-top: 12px;
+        font-size: 15px;
+    }
+
+    .invoice-row {
+        background-color: #fff;
+        border-radius: 4px;
+        box-shadow: $shadow-card;
+        margin-bottom: 12px;
+        .item {
+            padding: 10px 12px;
+            position: relative;
+            font-size: 16px;
+            font-weight: 500;
+            &.invoice-col {
+                border-radius: 4px 0px 0px 4px;
+                a {
+                    color: $color-primary;
+                    font-size: 14px;
+                    margin-top: -3px;
+                    display: block;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+            &:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                right: 0px;
+                width: 2px;
+                height: 80%;
+                background-color: #ccc;
+                transform: translateY(-50%);
+            }
+            &.desc {
+                line-height: 20px;
+                p {
+                    span {
+                        color: $color-grey;
+                        margin-right: 4px;
+                        font-size: 14px;
+                    }
+                }
+            }
+            &.status-col {
+                font-size: 18px;
+                font-weight: 600;
+            }
+        }
+
+        &.success {
+            .status-col {
+                color: #28a745;
+            }
+            .invoice-col {
+                border-left: 5px solid #28a745;
+            }
+        }
+        &.default {
+            .status-col {
+                color: dodgerblue;
+            }
+            .invoice-col {
+                border-left: 5px solid dodgerblue;
+            }
+        }
+        &.pending {
+            .status-col {
+                color: #ffc107;
+            }
+            .invoice-col {
+                border-left: 5px solid #ffc107;
+            }
+            
+        }
+        &.fail {
+            .status-col {
+                color: #dc3545;
+            }
+            .invoice-col {
+                border-left: 5px solid #dc3545;
+            }
+            
+        }
+    }
+
+    .pdf-col {
+        border-left: none!important;
+    }
+}

@@ -1,0 +1,41 @@
+.status-order {
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.completed {
+    background-color:#d2edda;
+    color: #0a4e37;
+}
+
+.canceled {
+    background-color: #e96262;
+    color: #831818;
+}
+
+.processed {
+    background-color: #eed183;
+    color: #876303;
+}
+
+.expired {
+    background-color: #d5dad6;
+    color: #25232f;
+}
+
+.working-status,
+.status {
+    color: $color-primary;
+    border-radius: 2px;
+
+    &.inactive {
+        color: $color-secondary;
+    }
+}
+
+.reviews-text {
+    width: 50%;
+}

@@ -1,0 +1,17 @@
+.map-section {
+    height: 100%;
+
+    .GMap {
+        height: 100%;
+
+        &__Wrapper {
+            height: 100%;
+        }
+    }
+}
+
+@media (max-width: 991px) {
+    .map-section {
+        min-height: 400px;
+    }
+}

@@ -1,0 +1,461 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+*,
+::after,
+::before {
+    box-sizing: border-box;
+}
+.toCapitalFirst {
+    text-transform: capitalize;
+}
+// START fixed footer
+
+html,
+body {
+    overflow-x: hidden;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+#app-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    margin-top: auto;
+}
+
+// END fixed footer
+
+html {
+    font-size: 100%; // 1rem = 16px
+
+    @media (max-width: 991px) {
+        font-size: 95%;
+    }
+
+    @media (max-width: 767px) {
+        font-size: 80%;
+    }
+}
+
+body {
+    font-family: 'weblysleek_ui-regular', sans-serif;
+    font-size: 1rem;
+    color: $default-color;
+    font-weight: 400;
+    @include scrollbars(8px, $color-primary, $color-grey-light-1);
+}
+
+@media (min-width: 1500px) {
+
+    .container{
+        width: 100%;
+        max-width: 1440px;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin: 0 auto;
+    }
+}
+
+a,
+span,
+input,
+button {
+    display: inline-block;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+   margin: 0;
+}
+
+input {
+    border: none;
+    padding: 0 15px;
+    color: $color-grey;
+    min-height: 40px;
+
+    &[type="checkbox"],
+    &[type="radio"],
+    &[type="file"]{
+        cursor: pointer;
+    }
+}
+
+
+
+a {
+    text-decoration: none;
+    @extend %transition-3;
+    color: $default-color;
+    
+    &:hover {
+        text-decoration: none;
+        color: inherit;
+    }
+}
+
+.static-content {
+    p {
+        margin-bottom: 15px;
+    }
+
+    ul {
+        margin-bottom: 15px;
+    }
+
+    li {
+        position: relative;
+        padding-left: 20px;
+        margin-bottom: 5px;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            background-color: $color-primary;
+            border-radius: 50%;
+        }
+    }
+
+    .static-link {
+        color: $color-primary;
+    }
+
+    .title-fifth {
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+
+ul, ol, li {
+    list-style: none;
+    margin-bottom: 0;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+button {
+    border: none !important;
+    background-color: transparent;
+}
+
+:focus,
+:active,
+.focus,
+a:focus,
+.custom-file-input:focus ~ .custom-file-label  {
+    outline: none;
+    box-shadow: none;
+}
+
+.base-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.md-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.lg-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.sm-icon {
+    width: 12px;
+    height: 12px;
+}
+
+.btn-blue {
+    background-color: $color-primary;
+    color: $color-white;
+
+    &:hover {
+        color: $color-white;
+        background-color: darken($color-primary, 3%);
+        box-shadow: $shadow-bottom;
+    }
+
+    &:focus {
+        background-color: $color-primary;
+    }
+    &:active {
+        background-color: $color-primary;
+    }
+}
+
+.btn-grey {
+    color: $color-secondary;
+    background-color: $bg-color;
+}
+
+.btn-color {
+    background-color: $color-secondary;
+    color: $color-white;
+
+    &:hover {
+        color: $color-white;
+        background-color: darken($color-secondary, 3%);
+        box-shadow: $shadow-bottom;
+    }
+
+    &:focus {
+        background-color: $color-secondary;
+    }
+    &:active {
+        background-color: $color-secondary;
+    }
+}
+
+.btn-form {
+    min-width: 100px;
+    text-align: center;
+}
+
+.btn-large {
+    min-width: 120px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 4px;
+    padding: 7px 10px;
+}
+
+.btn-partner-modal-close {
+    right: 0;
+}
+
+.btn-auth-modal-close {
+    right: 0;
+    border-radius: 0;
+    background-color: inherit;
+    color: $color-black;
+
+    &:hover {
+        color: $color-white;
+        background-color: darken($color-primary, 3%);
+        box-shadow: $shadow-bottom;
+    }
+
+    &:focus {
+        background-color: $color-primary;
+    }
+    &:active {
+        background-color: $color-primary;
+    }
+}
+
+.modal-header {
+
+    .close {
+        color: $color-primary;
+        font-size: 2rem;
+    }
+}
+
+
+.btn .b-icon.bi {
+    font-size: 14px;
+}
+
+.btn-group > .btn {
+    display: flex;
+    align-items: center;
+    background-color: $color-secondary;
+}
+
+.custom-select {
+    background-image: url("~/assets/sprite/svg/selectbox-arrow.svg") !important;
+    height: 40px;
+    color: $color-grey-bold;
+    border-radius: 10px;
+
+    .btn-outline-secondary {
+        display: none;
+    }
+}
+
+.form-select-box {
+    .vue-daterange-picker {
+        height: 40px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+}
+
+input,
+textarea,
+button, select {
+    &:focus {
+        border-color: #ced4da;
+        outline: 0;
+        box-shadow: none !important; 
+    }
+}
+
+textarea {
+    resize: none;
+}
+
+.title-primary {
+    font-weight: bold;
+    font-size: 2.8rem;
+    margin-bottom: 2.5rem;
+}
+
+.title-secondary {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #222;
+    font-weight: 800;
+}
+
+h2 {
+    color: #222;
+    font-weight: 800;
+}
+
+.title-tertiary {
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+}
+
+.title-quaternary {
+    // text-transform: uppercase;
+    font-size: 1.2rem;
+    margin-bottom: 14px;
+    font-weight: 600;
+    padding-left: 0px !important;
+}
+
+.title-fifth {
+    font-size: 18px;
+}
+
+.title-line {
+    background-color: $bg-color;
+    border-left: 3px solid $color-secondary;
+    font-size: 1rem;
+    margin-bottom: 15px;
+
+    span {
+        background-color: $color-white;
+        padding: 2px 3px;
+    }
+}
+
+//pagination styles
+
+.b-pagination-pills .page-item .page-link {
+    line-height: 25px;
+    text-shadow: 0 0 10px $color-primary;
+}
+
+.page-link {
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+
+.card-overlay::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: linear-gradient(180deg,rgba(105, 119, 150, 0.1),#12181f);
+    z-index: 1;
+}
+
+.three-line-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-break: anywhere;
+}
+
+.scroll-box {
+    @include scrollbars(5px, $color-primary, $color-grey-light-1);
+}
+
+.orders-page .when-opened {
+    position: unset;
+    padding: 20px;
+}
+
+.price-calc-block {
+    &.success-block {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: $color-white
+    }
+    svg {
+        fill: #28a745;
+        border-radius: 50px;
+    }
+    
+}
+
+#modal-sign-partner___BV_modal_outer_{
+    z-index: 999999999999 !important;
+}
+
+.b-toaster {
+    top: 100px !important;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #015cba;
+    border-radius: 20px;
+}
+::-webkit-scrollbar-track {
+    background-color: #ced4da;
+}
+
+.vue-phone-number-input {
+    .input-tel__input {
+        border-top-right-radius: 10px !important;
+        border-bottom-right-radius: 10px !important;
+    }
+    .country-selector__input {
+        border-top-left-radius: 10px !important;
+        border-bottom-left-radius: 10px !important;
+    }
+}
+
+.cool-lightbox {
+    margin-top: 80px;
+}

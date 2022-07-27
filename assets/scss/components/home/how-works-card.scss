@@ -1,0 +1,26 @@
+.how-works-card-section {
+    .works-card {
+        height: 100%;
+        padding: 25px 15px;
+        // box-shadow: $shadow-card;
+        margin-bottom: 15px;
+        border: 1px solid #dddd;
+        border-radius: 12px;
+
+        .icon {
+            fill: $color-primary;
+            margin-bottom: 15px;
+        }
+
+        .title-tertiary {
+            font-size: 1.2rem;
+            color: #222;
+            font-weight: 800;
+        }
+    }
+
+    .works-description {
+        margin-bottom: 30px;
+    }
+
+}

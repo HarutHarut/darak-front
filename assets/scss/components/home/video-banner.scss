@@ -1,0 +1,131 @@
+.video-banner {
+    position: relative;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    width: 100%;
+    height: 100vh;
+
+    .video-player-box {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        overflow: hidden;
+
+        .video-player {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            transform: scale(1.5);
+
+            iframe {
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+
+    #videoPoster {
+        @extend %bg-image;
+        display: none;
+    }
+   
+    .video-banner-text-box {
+        position: relative;
+        z-index: 10;
+
+        .title-primary {
+            font-size: 4rem;
+            color: $color-white;
+            text-shadow: $shadow-text;
+        }
+
+        .subtitle-primary {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            color: $color-white;
+            text-shadow: $shadow-text;
+        }
+    }
+}
+
+.search-form-book {
+    .form-input {
+
+        .search-location-input {
+            background-color: $color-white;
+            @include placeholder {
+                color: $default-color;
+            }
+            color: $default-color;
+        }
+    }
+
+    .vue-daterange-picker {
+       
+        .reportrange-text {
+           background-color: $color-white;
+           border: none;
+           color: $default-color;
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .daterangepicker.show-ranges {
+        min-width: 500px !important;
+    }
+}
+
+@media (max-width:991px) {
+
+    .video-banner {
+        height: 55vh;
+    }
+
+    iframe {
+        transform: scale(2.5);
+    }
+}
+
+@media (max-width: 767px) {
+
+    .video-banner {
+
+        .video-banner-text-box {
+
+            .title-primary {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+          
+            .subtitle-primary {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .search-form-book {
+            .form-input {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        
+            .datepicker-box {
+                width: 100%;
+
+                .vue-daterange-picker {
+                    margin-bottom: 5px;
+                }
+
+                .btn-color {
+                    width: 100%;
+                    height: 45px;
+                }
+                
+            }
+        }
+    }
+}
+

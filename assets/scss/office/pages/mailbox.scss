@@ -1,0 +1,29 @@
+
+
+.inbox-card {
+
+    .user-avatar {
+        height: 30px;
+        border: 1px solid $color-grey-light;
+        width: 30px;
+        object-fit: contain;
+    }
+}
+
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+
+    svg {
+        @extend %transition-3;
+        fill: $color-primary;
+    }
+
+    &:hover,
+    &:active {
+        svg {
+            fill: darken($color-primary, 10%);
+        }
+    }
+}

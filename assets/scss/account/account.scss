@@ -1,0 +1,111 @@
+.account-page-content {
+    min-height: 500px;
+
+    .title-primary {
+        font-size: 1.5rem;
+    }
+}
+
+.account-main-page {
+    padding-top: 80px;
+}
+
+.sidebar-account {
+
+    .menu-item {
+        margin-bottom: 20px;
+
+        .icon {
+            fill: $color-secondary;
+        }
+    }
+
+    .menu-link {
+        color: $default-color;
+        @extend %transition-3;
+
+        &:hover {
+            color: $color-secondary;
+        }
+
+        &.active {
+            color: $color-secondary;
+        }
+        svg {
+            margin-right: 8px !important;
+        }
+    }
+}
+
+.filter-orders-box {
+    .vue-daterange-picker {
+        width: 100%;
+        // border: 1px solid #ced4da;
+        border-radius: 4px;
+        height: 40px;
+    }
+}
+
+.orders-section {
+    .orders-table {
+        margin-bottom: 1rem;
+        color: #212529;
+        text-align: center;
+
+        td:not(:last-child), th:not(:last-child) {
+            border-right: 1px solid #dee2e6;
+        }
+
+        thead th:last-child {
+            vertical-align: middle;
+        }
+
+        .cancel-cell,
+        .view-cell {
+            padding: 5px 7px;
+            vertical-align: middle;
+        }
+
+        .status-order {
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .icon-cancel {
+            fill: var(--danger);
+        }
+
+        .icon-view {
+            fill: var(--success);
+        } 
+
+        .expired {
+            background-color: #d5dad6;
+            color: #25232f;
+        }
+    }
+}
+
+.completed, .complete {
+    background-color:#d2edda;
+    color: #0a4e37;
+}
+
+.canceled, .cancel {
+    background-color: #e96262;
+    color: #831818;
+}
+
+.processed, .pending {
+    background-color: #eed183;
+    color: #876303;
+}
+
+.orders-table {
+    button {
+        border: 1px solid !important;
+    }
+}
+

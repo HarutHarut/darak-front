@@ -1,0 +1,88 @@
+@import 'variables';
+@import 'utilities';
+@import 'mixins';
+@import 'font';
+@import 'global';
+
+@import 'components/banner';
+@import 'components/map';
+@import 'components/tabs.scss';
+@import 'components/lightbox';
+@import 'components/scroll-top';
+@import 'components/go-back';
+@import 'components/loading-bar';
+@import 'components/search-form-book';
+@import 'components/auth';
+
+@import 'components/home/video-banner';
+@import 'components/home/storage-card';
+@import 'components/home/guaranty';
+@import 'components/home/top-destination';
+@import 'components/home/how-works-card';
+@import 'components/home/recommended-storages';
+@import 'components/home/map';
+@import 'components/home/blog';
+
+@import 'layouts/header';
+@import 'layouts/footer';
+@import 'layouts/error';
+
+@import 'pages/cities';
+@import 'pages/become-a-partner';
+@import 'pages/who-are-we';
+@import 'pages/contact-us';
+@import 'pages/how-works';
+@import 'pages/faq';
+
+@import 'pages/blog/index';
+@import 'pages/blog/id';
+
+@import 'pages/lockers/id';
+@import 'pages/lockers/map/index';
+@import 'pages/lockers/map/id';
+
+@import 'account/account';
+@import 'account/sidebar-account';
+
+/*---------- DASHBOARD OFFICE PAGES----------*/
+
+@import 'office/global-office';
+
+@import 'office/layouts/header';
+@import 'office/layouts/sidebar';
+
+@import 'office/components/datepicker';
+@import 'office/components/icon-box';
+@import 'office/components/chart';
+@import 'office/components/orders-table';
+@import 'office/components/page-content-top';
+
+@import 'office/pages/branchs';
+@import 'office/pages/add-branch';
+@import 'office/pages/add-lockers';
+@import 'office/pages/lockers';
+@import 'office/pages/reviews';
+@import 'office/pages/sizes';
+@import 'office/pages/mailbox';
+@import 'office/pages/invoices';
+
+/*---------- DASBOARD ADMIN PAGES----------*/
+
+@import 'dashboard/global-dasboard';
+
+@import 'dashboard/layouts/header';
+@import 'dashboard/layouts/sidebar';
+
+@import 'dashboard/components/icon-box';
+@import 'dashboard/components/chart';
+@import 'dashboard/components/datepicker';
+/* @import 'dashboard/components/orders-table'; */
+@import 'dashboard/components/page-content-top';
+
+@import 'dashboard/pages/cities';
+
+@import 'dashboard/pages/users';
+@import 'dashboard/pages/branchs';
+@import 'dashboard/pages/reviews';
+@import 'dashboard/pages/orders';
+@import 'dashboard/pages/mailbox';

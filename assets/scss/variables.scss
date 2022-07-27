@@ -1,0 +1,34 @@
+$color-primary: #015cba; 
+$color-primary-light: #4d7aa7;
+$color-secondary : #e56943; 
+$color-secondary-light: #e79278;
+
+$color-viber: #8f5db7;
+$color-whatsapp: #25d366;
+
+//TEXT COLOR
+$default-color : #212529;
+$color-grey: #6c757d;
+$color-grey-light: #adb5bd;
+$color-grey-light-1: #ced4da;
+$color-grey-bold:#495057;
+$color-danger: #cf1c53;
+
+
+
+$bg-color: #f8f9fa;
+$bg-light:  #e9ecef;
+$bg-bold:  rgba(108,117,125,.1);
+
+$color-white: #ffffff;
+$color-black: #000000;
+
+//TEXT-SHADOW
+$shadow-text : 0 0 5px $color-grey;
+$shadow-text-error : 2px 7px 7px $color-grey;
+
+//BOX-SHADOW
+$shadow-card: 0 0 35px rgba($color-black, .1);
+$shadow-bottom :  0 5px 10px rgba($color-black,.2);
+$shadow-image: 0 0 5px 0 $color-grey;
+$shadow-left: 5px 0 30px rgba($color-black,.3);

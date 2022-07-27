@@ -1,0 +1,24 @@
+.sidebar-account {
+
+    .menu-item {
+        margin-bottom: 20px;
+        .icon {
+            fill: $color-secondary;
+        }
+    }
+
+    .menu-link {
+        color: $default-color;
+        @extend %transition-3;
+
+        &:hover {
+            color: $color-secondary;
+        }
+
+        &.nuxt-link-exact-active,
+        &.active {
+            color: $color-secondary;
+            cursor: default;
+        }
+    }
+}

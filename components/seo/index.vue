@@ -24,13 +24,26 @@ export default {
   },
   methods: {
     setMetaTitle() {
+        let metaDesc = '';
         if(this.meta_title){
+            metaDesc = this.meta_title;
             if(this.meta_title[this.$i18n.locale] && this.meta_title[this.$i18n.locale] !== null){
-                return this.meta_title[this.$i18n.locale]
+                metaDesc = this.meta_title[this.$i18n.locale];
+                // return this.meta_title[this.$i18n.locale]
             }else{
-                 return this.$t("meta.title")
+                metaDesc = this.$t("meta.title");
+                 // return this.$t("meta.title")
             }
         }
+        if(this.meta_title[this.$i18n.locale] === undefined){
+            metaDesc = this.meta_title  //this.$t("meta.cityTitle");
+        }
+
+        if(this.meta_title === ''){
+            metaDesc = this.$t('home.subTitle');
+        }
+
+        return metaDesc;
 
     },
     setMetaDescription() {
@@ -40,15 +53,26 @@ export default {
       let metaDesc = ""
       if (this.meta_description) {
           metaDesc = this.meta_description
-          if(this.meta_description[this.$i18n.locale]){
+          if(this.meta_description[this.$i18n.locale] && this.meta_description[this.$i18n.locale] !== null){
               metaDesc = this.meta_description[this.$i18n.locale]
+          }
+          else{
+              metaDesc = this.meta_description.en
           }
       }
       else if (metaDescription[0].content > 0) {
         metaDesc = this.$t("meta.description")
       }
 
-      return {
+      if(metaDesc === undefined){
+          metaDesc = this.meta_description
+      }
+
+        if(this.meta_description === ''){
+            metaDesc = this.$t("meta.homeMetaDescription")
+        }
+
+        return {
         hid: 'description',
         name: 'description',
         content: metaDesc
@@ -69,6 +93,10 @@ export default {
         metaKeyword = this.$t("meta.keywords")
       }
 
+        if(this.meta_keywords === ''){
+            metaKeyword = this.$t("meta.keywords")
+        }
+
       return {
         hid: 'keywords',
         name: 'keywords',
@@ -79,12 +107,11 @@ export default {
       let defaultOgImage = this.$store.app.head.meta.filter(function (elem) {
         if (elem.hid == "og:image") return elem.name;
       })
-      let ogImage = ''
-      if (this.og_image) {
-        ogImage = this.og_image
-      } else if (defaultOgImage[0].content > 0) {
-        ogImage = defaultOgImage[0].content
-      }
+      let ogImage = this.og_image
+
+        if(this.og_image === ''){
+            ogImage = this.$config.cdnUrl + '/img/logo.jpg'
+        }
 
       return {
         hid: 'og:image',
@@ -96,16 +123,15 @@ export default {
       let defaultTwitterImage = this.$store.app.head.meta.filter(function (elem) {
         if (elem.hid == "twitter:image") return elem.name;
       })
-      let twitterImage = ''
-      if (this.twitter_image) {
-        twitterImage = this.twitter_image
-      } else if (defaultTwitterImage[0].content > 0) {
-        twitterImage = defaultTwitterImage[0].content
-      }
+      let twitterImage = this.og_image
+
+        if(this.og_image === ''){
+            twitterImage = this.$config.cdnUrl + '/img/logo.jpg'
+        }
 
       return {
-        hid: 'og:image',
-        property: 'og:image',
+        hid: 'twitter:image',
+        property: 'twitter:image',
         content: twitterImage
       }
     }

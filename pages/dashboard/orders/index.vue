@@ -70,7 +70,7 @@
                      <b-button
                              type="button"
                              class="btn btn-color btn-form"
-                             @click="searchOrders()"
+                             @click="getOrders(currentPage)"
                      >{{ $t("form.find") }}
                      </b-button
                      >
@@ -113,7 +113,8 @@
                         <b-td><span class="status-order complated">{{order.status}}</span></b-td>
                         <!-- <b-td ><svg-icon class="base-icon" name="eye"></svg-icon></b-td> -->
                         <b-td>
-                           <button v-if="check(order.check_in) && order.status == 'pending'" v-b-modal.cancel-order-modal class="btn btn-cancel" @click="openCancelModal(order.id)">{{ $t("form.btn.cancel") }}</button>
+<!--                           <button v-if="check(order.check_in) && order.status == 'pending'" v-b-modal.cancel-order-modal class="btn btn-cancel" @click="openCancelModal(order.id)">{{ $t("form.btn.cancel") }}</button>-->
+                           <button v-if="order.status == 'pending'" v-b-modal.cancel-order-modal class="btn btn-cancel" @click="openCancelModal(order.id)">{{ $t("form.btn.cancel") }}</button>
                         </b-td>
                      </b-tr>
                   </b-tbody>
@@ -123,9 +124,11 @@
                      v-model="currentPage"
                      :total-rows="total"
                      :per-page="perPage"
-                     @input="getOrders"
                      pills
                      size="md"
+                     class="justify-content-center"
+                     aria-controls="my-table"
+                     @change="getOrders"
                   ></b-pagination>
                </div>
             </section>
@@ -168,12 +171,12 @@ export default {
       return {
          dateRange: {
             startDate: new Date(date.getFullYear(), date.getMonth(), 1),
-            endDate: new Date()
+            endDate: new Date(date.getFullYear(), date.getMonth() + 1, 0)
          },
          branches:null,
-         officeOrders:null,
-         type:'business_owner',
-         businessId:null,
+         officeOrders: [],
+         type:'',
+         businessId: '',
          cancelButton: false,
          orderId: null,
          cancelButtonArray:[],
@@ -193,17 +196,15 @@ export default {
    methods: {
       getOrders(page = 1) {
          this.$axios
-           .post("orders/order", {
-              type:this.type,
-              branch_id:this.branchId,
-              check_in: moment(this.dateRange.startDate).format(
-                      "YYYY-MM-DD HH:mm:ss"
-              ),
-              check_out: moment(this.dateRange.endDate).format(
-                      "YYYY-MM-DD HH:mm:ss"
-              ),
-           })
+                 .get(`orders/order?page=${page}&business_id=${this.businessId}&branch_id=${this.branchId}&check_in=${moment(this.dateRange.startDate).format(
+                         "YYYY-MM-DD HH:mm:ss"
+                 )}&check_out=${moment(this.dateRange.endDate).format(
+                         "YYYY-MM-DD HH:mm:ss"
+                 )}`)
+
            .then(({data}) => {
+              this.currentPage = data.orders.current_page
+              this.total = data.orders.total
               this.officeOrders = data.orders.data
               this.officeOrders.forEach(element => {
                  this.businessId = element.business_id
@@ -216,6 +217,16 @@ export default {
                     this.cancelButton = false
                  }
                  this.cancelButtonArray.push(this.cancelButton)
+              });
+              this.$router.replace({
+                 query:
+                         {
+                            page: `${this.currentPage}`,
+                            check_in: `${this.dateRange.startDate}`,
+                            check_out: `${this.dateRange.endDate}`,
+                            branch_id: `${this.branchId}`,
+                            business_id: `${this.businessId}`,
+                         }
               });
            })
       },
@@ -242,23 +253,6 @@ export default {
                  })
                  .finally(() => {
                  });
-      },
-      searchOrders() {
-         this.$axios
-                 .post("orders/order", {
-                    type:this.type,
-                    business_id:this.businessId,
-                    branch_id:this.branchId,
-                    check_in: moment(this.dateRange.startDate).format(
-                            "YYYY-MM-DD HH:mm:ss"
-                    ),
-                    check_out: moment(this.dateRange.endDate).format(
-                            "YYYY-MM-DD HH:mm:ss"
-                    ),
-                 })
-                 .then(({data}) => {
-                    this.officeOrders = data.orders.data
-                 })
       },
       cancelOrder() {
          this.$axios.post(`cancel-order`, {
@@ -295,13 +289,18 @@ export default {
          return val[lang]
       },
       dateTable(val) {
-         const date = moment(val).format('D MMMM YYYY, h:mm:ss ')
+         const date = moment(val).format('D MMMM YYYY, HH:mm:ss')
          return date.toString()
       },
    },
    mounted(){
+      let page = this.$route.query.page || 1;
+      this.dateRange.startDate = this.$route.query.check_in || '';
+      this.dateRange.endDate = this.$route.query.check_out || '';
+      this.branchId = this.$route.query.branch_id || '';
+      this.businessId = this.$route.query.business_id || '';
       this.getBranchesList()
-      this.getOrders()
+      this.getOrders(page)
    }
 }
 </script>

@@ -46,6 +46,12 @@
                                     ></b-form-radio-group>
                                  </b-form-group>
                               </b-col>
+                              <b-col sm="12" class="mt-3">
+                                 <CityDescTranslation
+                                         :about_city="form.about_city"
+                                         :description="form.description"
+                                 ></CityDescTranslation>
+                              </b-col>
                            </b-row>
                            <b-row>
                               <b-col>
@@ -77,6 +83,36 @@
                                  <p class="error-text">{{ errorLogoMessage }}</p>
                               </b-col>
                            </b-row>
+                           <b-row>
+                              <b-col>
+                                 <div class="multiple-upload image-upload-box mb-3">
+                                    <div class="control-form">
+                                       <div class="upload-img-content">
+                                          <div>
+                                             <label for="preview_file"
+                                                    class="text-center my-2 d-flex align-items-center justify-content-center">
+                                                <span class="mr-2">{{ $t("dashboard.upload.wallpaper") }}</span>
+                                                <svg-icon class="md-icon" name="download"></svg-icon>
+                                             </label>
+                                             <b-form-file type="file" id="preview_file" class="upload-file d-none" @change="addBanner"
+                                                          ref="inputer"
+                                                          accept="image/png,image/jpeg,image/gif,image/jpg"></b-form-file>
+                                          </div>
+                                          <ul class=" border upload-img-content p-2 d-flex flex-wrap">
+                                             <li v-if="banner.file">
+                                                <p class="img">
+                                                   <img :src="banner.url" class="image"/>
+                                                   <a class="close" @click="deleteBanner()">×</a>
+                                                </p>
+                                             </li>
+                                          </ul>
+                                       </div>
+                                       <p class="help-block text-center">{{ $t("dashboard.upload.imageRecommendations") }}</p>
+                                    </div>
+                                 </div>
+                                 <p class="error-text">{{ errorLogoMessage }}</p>
+                              </b-col>
+                           </b-row>
                            <div class="text-center">
                               <button type="submit" class="btn btn-blue btn-form mb-3">
                                  {{ $t("dashboard.btn.submit") }}
@@ -95,14 +131,39 @@
 <script>
 
 import _ from 'lodash'
+import CityDescTranslation from "../../../components/dashboard/city/city-desc-translation"
+
 
 export default {
+
+   components: {
+      CityDescTranslation
+   },
    data() {
       return {
          name: '',
          form: {
             name: '',
+            about_city: {
+               fr: null,
+               am: null,
+               ru: null,
+               ch: null,
+               de: null,
+               sp: null,
+               en: null
+            },
+            description: {
+               fr: null,
+               am: null,
+               ru: null,
+               ch: null,
+               de: null,
+               sp: null,
+               en: null
+            },
             image: null,
+            preview: null,
             lat: 40.177,
             lng: 44.503,
             top: 1
@@ -115,28 +176,73 @@ export default {
             url: null,
             file: null
          },
+         banner: {
+            url: null,
+            file: null
+         },
          errorMessage: null,
-         errorLogoMessage: null
+         errorLogoMessage: null,
+         errorBannerMessage: null,
       }
    },
    methods: {
       create() {
-
          if (!this.logo.file) {
             this.errorLogoMessage = 'Logo is required.';
             return false;
          }
+         // if (!this.banner.file) {
+         //    this.errorBannerMessage = 'Banner is required.';
+         //    return false;
+         // }
          if (!this.form.name) {
             this.errorMessage = 'City not found. Please type correct name.';
             return false;
          }
 
          this.form.image = this.logo.file;
-         const formData = new FormData;
+         this.form.preview = this.banner.file;
+         const formData = new FormData();
 
          for (const prop in this.form) {
 
-            formData.append(prop, this.form[prop]);
+            if (prop === "name") {
+                  formData.append(
+                          `name`,
+                          this.form.name
+                  )
+            } else if (prop === "description") {
+               for (let previewKey in this.form[prop]) {
+                  formData.append(
+                          `description[${previewKey}]`,
+                          this.form[prop][previewKey]
+                  )
+               }
+            }else if (prop === "about_city") {
+               for (let previewKey in this.form[prop]) {
+                  formData.append(
+                          `about_city[${previewKey}]`,
+                          this.form[prop][previewKey]
+                  )
+               }
+            }else if (prop === "lat") {
+                  formData.append(
+                          `lat`,
+                          this.form.lat
+                  )
+            }else if (prop === "lng") {
+                  formData.append(
+                          `lng`,
+                          this.form.lng
+                  )
+            }else if (prop === "top") {
+                  formData.append(
+                          `top`,
+                          this.form.top
+                  )
+            }else{
+               formData.append(prop, this.form[prop]);
+            }
          }
 
          this.$axios.post('/admin/cities', formData).then((response) => {
@@ -198,8 +304,20 @@ export default {
             file: event.target.files[0]
          };
       },
+      addBanner(event) {
+         this.banner = {
+            url: URL.createObjectURL(event.target.files[0]),
+            file: event.target.files[0]
+         };
+      },
       deleteLogo() {
          this.logo = {
+            url: null,
+            file: null
+         }
+      },
+      deleteBanner() {
+         this.banner = {
             url: null,
             file: null
          }

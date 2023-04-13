@@ -124,7 +124,6 @@ export default {
   },
   async asyncData({$axios, route}) {
     const {data} = await $axios.post(`orders/single/${route.params.id}`);
-    console.log(data)
     var count = 0;
     data.order.bookings.forEach(e => {
       count += e.amount;

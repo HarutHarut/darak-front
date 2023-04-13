@@ -16,10 +16,10 @@
             <b-table-simple responsive class="w-100 office-page-table">
                <b-thead>
                   <b-tr>
-                     <b-th>Locker Name</b-th>
-                     <b-th>Start Time</b-th>
-                     <b-th>End Time</b-th>
-                     <b-th>Price</b-th>
+                     <b-th>{{ $t('title.lockerName') }}</b-th>
+                     <b-th>{{ $t('dashboard.tooltip.startTime') }}</b-th>
+                     <b-th>{{ $t('dashboard.tooltip.endTime') }}</b-th>
+                     <b-th>{{ $t('dashboard.tooltip.price') }}</b-th>
                   </b-tr>
                </b-thead>
                <b-tbody>

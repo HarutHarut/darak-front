@@ -38,6 +38,7 @@
                <div class="card-body">
                   <h3 class="title-tertiary">{{$t("dashboard.fields.lockerDetails")}}</h3>
                   <ul class="card-list">
+
                      <li class="d-flex justify-content-between"><p class="item-title">{{$t("form.checkIn")}}</p><p>{{ booking.order.check_in | dateTable }}</p></li>
                      <li class="d-flex justify-content-between"><p class="item-title">{{$t("form.checkOut")}}</p><p>{{ booking.order.check_out | dateTable }}</p></li>
                      <li class="d-flex justify-content-between"><p class="item-title">{{$t("dashboard.fields.size")}}</p><p>{{ booking.locker.size.name.en }}</p></li>
@@ -56,7 +57,6 @@ import moment from "moment";
 export default {
    async asyncData({ $axios, route }) {
       const { data } = await $axios.post(`orders/single/${route.params.id}`);
-      console.log(data.order.arrSizeCount);
       var count = 0;
       data.order.bookings.forEach(e => {
          count += e.amount;
@@ -77,7 +77,15 @@ export default {
       changeDataFormat(val) {
          const date = moment(val).format("DD/MM/YYYY");
          return date.toString();
-      }
+      },
+      date(val) {
+         const date = moment(val).format("DD.MM.YYYY HH:mm");
+         return date.toString();
+      },
+      dateTable(val) {
+         const date = moment(val).format('D MMMM YYYY, HH:mm:ss')
+         return date.toString()
+      },
    }
 };
 </script>

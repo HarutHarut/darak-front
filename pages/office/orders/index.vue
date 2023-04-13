@@ -77,7 +77,7 @@
                         </b-col>
                     </b-row>
                 </div>
-                <Chart/>
+                <!-- <Chart/> -->
                 <section class="static-section  mb-3">
                     <div class="title-box d-flex align-items-center justify-content-between" v-b-toggle.collapse-orders>
                         <h4 class="title p-3">{{ $t("dashboard.list.orders") }}</h4>
@@ -100,7 +100,7 @@
                                 </b-tr>
                             </b-thead>
                             <b-tbody>
-                                <b-tr :key="order.id" v-for="(order) in officeOrders">
+                                <b-tr :key="order.id" v-for="(order, index) in officeOrders">
                                     <b-th class="bookingColor">
                                       <NuxtLink :to="prepareUrl(`/office/orders/${order.booking_number}`)" >#{{order.booking_number}}</NuxtLink>
                                     </b-th>
@@ -115,11 +115,25 @@
                                     <b-td><span class="status-order complated">{{order.status}}</span></b-td>
                                     <!-- <b-td ><svg-icon class="base-icon" name="eye"></svg-icon></b-td> -->
                                     <b-td>
-                                        <button v-if="check(order.check_in) && order.status == 'pending'" v-b-modal.cancel-order-modal class="btn btn-cancel" @click="openCancelModal(order.id)">{{ $t("form.btn.cancel") }}</button>
+                                        <button v-if="order.status == 'pending'" v-b-modal.cancel-order-modal class="btn btn-cancel" @click="openCancelModal(order.id, index)">
+                                            {{ $t("form.btn.cancel") }}
+                                        </button>
                                     </b-td>
                                 </b-tr>
                             </b-tbody>
                         </b-table-simple>
+                        <div class="p-2" v-if="total > perPage || currentPage !== 1">
+                            <b-pagination
+                                    v-model="currentPage"
+                                    :total-rows="total"
+                                    :per-page="perPage"
+                                    pills
+                                    size="md"
+                                    class="justify-content-center"
+                                    aria-controls="my-table"
+                                    @change="getOrders"
+                            ></b-pagination>
+                        </div>
                     </b-collapse>
                 </section>
             </b-col>
@@ -142,7 +156,7 @@ import PageTitle from '@/components/office/page-title.vue'
 import DateRangePicker from 'vue2-daterange-picker'
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 import moment from 'moment'
-import Chart from '@/components/office/chart.vue'
+// import Chart from '@/components/office/chart.vue'
 import global from "~/mixins/global.js"
 
 export default {
@@ -150,7 +164,7 @@ export default {
     components: {
         PageTitle,
         DateRangePicker,
-        Chart
+        // Chart
     },
 
     data () {
@@ -164,12 +178,16 @@ export default {
                 endDate: new Date()
             },
             branches:null,
-            officeOrders:null,
+            officeOrders:[],
             type:'business_owner',
             businessId:null,
             cancelButton: false,
             orderId:null,
-            cancelButtonArray:[]
+            cancelButtonArray:[],
+            orderIndex: null,
+            perPage: 15,
+            total: 0,
+            currentPage: 1,
         }
     },
 
@@ -185,25 +203,22 @@ export default {
          return val[lang]
         },
         dateTable(val) {
-            const date = moment(val).format('D MMMM YYYY, h:mm:ss ')
+            const date = moment(val).format('D MMMM YYYY, HH:mm:ss')
             return date.toString()
         },
     },
     
     methods:{
-        getOrders() {
+        getOrders(page = 1) {
             this.$axios
-                .post("orders/order", {
-                  type:this.type,
-                  branch_id:this.branchId,
-                  check_in: moment(this.dateRange.startDate).format(
-                      "YYYY-MM-DD HH:mm:ss"
-                  ),
-                  check_out: moment(this.dateRange.endDate).format(
-                      "YYYY-MM-DD HH:mm:ss"
-                  ),
-                })
+                .get(`orders/order?page=${page}&branch_id=${this.branchId}&check_in=${moment(this.dateRange.startDate).format(
+                    "YYYY-MM-DD HH:mm:ss"
+                )}&check_out=${moment(this.dateRange.endDate).format(
+                    "YYYY-MM-DD HH:mm:ss"
+                )}`)
                 .then(({data}) => {
+                    this.currentPage = data.orders.current_page
+                    this.total = data.orders.total
                     this.officeOrders = data.orders.data
                     this.officeOrders.forEach(element => {
                         this.businessId = element.business_id
@@ -216,7 +231,16 @@ export default {
                                 this.cancelButton = false
                             }
                             this.cancelButtonArray.push(this.cancelButton)
-                    });                                     
+                    });
+                    this.$router.replace({
+                        query:
+                            {
+                                page: `${this.currentPage}`,
+                                check_in: `${this.dateRange.startDate}`,
+                                check_out: `${this.dateRange.endDate}`,
+                                branch_id: `${this.branchId}`,
+                            }
+                    });
                 })
         },
         check(check_in) {
@@ -243,30 +267,27 @@ export default {
                 .finally(() => { 
                 });
             },
-        searchOrders() {
-          console.log(this.dateRange.startDate);
+        searchOrders(page=1) {
           this.$axios
-                .post("orders/order", {
-                    type:this.type,
-                    business_id:this.businessId,
-                    branch_id:this.branchId,
-                    check_in: moment(this.dateRange.startDate).format(
-                        "YYYY-MM-DD HH:mm:ss"
-                    ),
-                    check_out: moment(this.dateRange.endDate).format(
-                        "YYYY-MM-DD HH:mm:ss"
-                    ), 
-                })
+              .get(`orders/order?page=${page}&type=${this.type}&business_id=${this.businessId}&branch_id=${this.branchId}&check_in=${moment(this.dateRange.startDate).format(
+                  "YYYY-MM-DD HH:mm:ss"
+              )}&check_out=${moment(this.dateRange.endDate).format(
+                  "YYYY-MM-DD HH:mm:ss"
+              )}`)
                 .then(({data}) => {
+                    this.currentPage = data.orders.current_page
+                    this.total = data.orders.total
                     this.officeOrders = data.orders.data
+                    this.$router.replace({query: {page: `${this.currentPage}`}});
                 })
         },
         cancelOrder() {
+            this.$bvModal.hide('cancel-order-modal')
+            this.officeOrders[this.orderIndex].status = 'canceled'
             this.$axios.post(`cancel-order`, {
                 order_id: this.orderId
             })
             .then(({ data: { booking } }) => {
-                // this.booking.status = booking.status;
                 this.$bvToast.toast(`Order canceled successfully.`, {
                 title: `Order canceled successfully.`,
                 variant: "success",
@@ -274,18 +295,28 @@ export default {
                 });
               this.$bvModal.hide('cancel-order-modal')
             }).catch((e) => {
-                console.log(e);
+                this.$bvToast.toast(`Booking cancel failed.`, {
+                    title: `Booking cancel failed.`,
+                    variant: "danger",
+                    solid: true
+                });
+                this.officeOrders[this.orderIndex].status = 'pending'
             });
         },
-        openCancelModal(id) {
+        openCancelModal(id, index) {
          this.orderId = id
+         this.orderIndex = index
          this.$bvModal.show("cancel-order-modal")
       },
     },
 
     mounted() {
-      this.getBranchesList()
-      this.getOrders()
+        let page = this.$route.query.page || 1;
+        this.dateRange.startDate = this.$route.query.check_in || '';
+        this.dateRange.endDate = this.$route.query.check_out || '';
+        this.branchId = this.$route.query.branch_id || '';
+        this.getBranchesList()
+        this.getOrders(page)
     },
 }
 

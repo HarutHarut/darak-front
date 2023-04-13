@@ -21,7 +21,7 @@
                                  <b-form-group
                                          label="Description"
                                          label-for="static-textarea">
-                                    <ckeditor v-model="form.description.ru"></ckeditor>
+                                    <ckeditor v-model="form.description_ru"></ckeditor>
                                  </b-form-group>
                               </b-tab>
 
@@ -39,7 +39,7 @@
                                  <b-form-group
                                          label="Description"
                                          label-for="static-textarea">
-                                   <ckeditor v-model="form.description.en"></ckeditor>
+                                   <ckeditor v-model="form.description_en"></ckeditor>
                                  </b-form-group>
                               </b-tab>
 
@@ -56,7 +56,7 @@
                                  <b-form-group
                                          label="Description"
                                          label-for="static-textarea">
-                                   <ckeditor v-model="form.description.fr"></ckeditor>
+                                   <ckeditor v-model="form.description_fr"></ckeditor>
                                  </b-form-group>
                               </b-tab>
 
@@ -74,7 +74,7 @@
                                  <b-form-group
                                          label="Description"
                                          label-for="static-textarea">
-                                   <ckeditor v-model="form.description.ch"></ckeditor>
+                                   <ckeditor v-model="form.description_ch"></ckeditor>
                                  </b-form-group>
                               </b-tab>
 
@@ -91,7 +91,7 @@
                                  <b-form-group
                                          label="Description"
                                          label-for="static-textarea">
-                                   <ckeditor v-model="form.description.am"></ckeditor>
+                                   <ckeditor v-model="form.description_am"></ckeditor>
                                  </b-form-group>
                               </b-tab>
                            </b-tabs>

@@ -25,6 +25,8 @@
                      <b-tr>
                         <b-th>{{ $t("list.Logo") }}</b-th>
                         <b-th>{{ $t("list.Name") }}</b-th>
+                        <b-th>{{ $t("dashboard.fields.user") }}</b-th>
+                        <b-th>{{ $t("account.email") }}</b-th>
                         <b-th>{{ $t("list.BranchesCount") }}</b-th>
                         <b-th>{{ $t("list.AvailableSizes") }}</b-th>
                         <b-th>{{ $t("list.Status") }}</b-th>
@@ -42,6 +44,10 @@
                            <p v-if="business.name[$i18n.locale]">{{ business.name | getTransValue($i18n.locale) }}</p>
                            <p v-else>{{ business.name.en }}</p>
                         </b-td>
+                        <b-td>
+                           <p>{{ business.user.name }}</p>
+                        </b-td>
+                        <b-td>{{ business.email }}</b-td>
                         <b-td>{{ business.branches_count }}</b-td>
                         <b-td>{{ business.sizes_count }}</b-td>
                         <b-td>
@@ -88,12 +94,13 @@
                      </b-tr>
                   </b-tbody>
                </b-table-simple>
-               <div class="p-2" v-if="this.pagination.total > this.pagination.per_page || this.pagination.currentPage !== 1">
+<!--               {{ total per_page current_page }}-->
+               <div class="p-2" v-if="total > per_page || currentPage !== 1">
                   <b-pagination
-                     v-model="this.pagination.currentPage"
-                     :total-rows="this.pagination.total"
-                     :per-page="this.pagination.per_page"
-                     @input="pageChanged"
+                     v-model="current_page"
+                     :total-rows="total"
+                     :per-page="per_page"
+                     @change="getData"
                      pills
                      size="md"
                   ></b-pagination>
@@ -118,33 +125,6 @@ export default {
       SearchForm,
       IconBox
    },
-   async asyncData({ $axios }) {
-      const pagination = {
-         currentPage: 1,
-         per_page: 15,
-         total: 0
-      }
-      const {
-         data: { businesses }
-      } = await $axios.get("/admin/businesses", {
-         params: {
-            page: pagination.currentPage,
-            perPage: pagination.per_page
-         }
-      })
-
-      return {
-         businesses: businesses.data,
-         pagination: {
-            total: businesses.total,
-            ...pagination
-         }
-
-         // business_status: data.business_status,
-         // business_publish: data.business_publish
-      }
-   },
-
    data() {
       return {
          title: this.$t("dashboard.list.business"),
@@ -152,7 +132,10 @@ export default {
          selected: null,
          businessFilter: [],
          businesses: [],
-         pagination: {},
+         // pagination: {},
+         currentPage: 1,
+         per_page: 15,
+         total: 0,
          business_status: {},
          business_publish: {},
          counts: {},
@@ -174,34 +157,34 @@ export default {
    },
    methods: {
       getBusiness(search) {
-         this.$axios
-            .get(`admin/businesses?search=${search}`)
-            .then(({ data: { businesses } }) => {
-               this.businesses = businesses.data
-            })
-            .catch(e => {
-            })
+         this.searchText = search;
+         this.getData();
       },
       async getData(page = 1) {
-         this.$nuxt.$loading.start()
          const {
             data: { businesses }
-         } = await this.$axios.get(`/admin/businesses?page=${page}`, {
+         } = await this.$axios.get(`/admin/businesses?page=${page}&search=${this.searchText}`, {
             params: {
-               page: this.pagination.currentPage,
-               perPage: this.pagination.per_page,
+               currentPage: this.currentPage,
+               per_page: this.per_page,
                filter: {
                   status: 1
                }
             }
          })
-         this.pagination.total = businesses.total
-         this.pagination.per_page = businesses.per_page
-         this.businesses = businesses.data
-         this.$nuxt.$loading.finish()
-      },
-      pageChanged() {
-         this.getData()
+          this.total = businesses.total
+          this.per_page = businesses.per_page
+          this.currentPage = businesses.current_page
+          this.businesses = businesses.data
+          await this.$router.replace({
+             query:
+                  {
+                     page: `${this.currentPage}`,
+                     search: `${this.searchText}`,
+                  }
+          });
+
+         // this.$nuxt.$loading.finish()
       },
       accept(id, status) {
          this.$nextTick(() => {
@@ -210,7 +193,8 @@ export default {
          this.$axios
             .post(`/admin/businesses/change_status/${id}`, { status })
             .then(({ data: { business } }) => {
-               window.location.reload()
+               // window.location.reload()
+               this.getData(this.current_page)
             })
             .finally(() => {
                this.$nuxt.$loading.finish()
@@ -221,14 +205,9 @@ export default {
       this.$axios.post('/dashboard').then((res) => {
          this.counts = res.data
       })
-      console.log(this.counts)
-
+      let page = this.$route.query.page || 1;
+      this.searchText = this.$route.query.search || '';
+      this.getData(page)
    }
 }
 </script>
-
-<style>
-.logoTh {
-   width: 150px;
-}
-</style>

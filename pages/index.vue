@@ -6,9 +6,18 @@
       <Destination :cities="topCities"/>
       <RecommendedStorages :branches="recommendedStorages"/>
       <Blog :blogs="topBlogs"/>
+      <Seo
+              :meta_title="$t('home.subTitle')"
+              :meta_keywords="''"
+              :meta_description="$t('meta.homeMetaDescription')"
+              :og_image="this.$config.cdnUrl + '/img/logo.jpg'"
+              :twitter_image="this.$config.cdnUrl + '/img/logo.jpg'"
+      >
+      </Seo>
    </div>
 </template>
 <script>
+import Seo from '../components/seo/index.vue'
 import Blog from '../components/home/blog.vue';
 import Works from '../components/home/how-works.vue';
 import Guaranty from '../components/home/guaranty.vue';
@@ -26,6 +35,7 @@ export default {
       Destination,
       RecommendedStorages,
       Blog,
+      Seo
    },
    async asyncData({store}) {
       await store.dispatch('home/getBlogs');
@@ -34,6 +44,7 @@ export default {
    },
    mounted() {
       let url = window.location.href;
+      this.seoImage = window.location.host+"/_nuxt/assets/img/logo/logo-white-text.png";
       if (url.includes('#login')){
          this.$bvModal.show("modal-sign")
       }

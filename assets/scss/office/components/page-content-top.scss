@@ -53,4 +53,13 @@
         top: 10px;
         right: 8px;
     }
+.search-form {
+        svg {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 10px;
+            cursor: pointer;
+        }
+    }
 }

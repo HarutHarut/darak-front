@@ -15,6 +15,21 @@
         name: "",
         mounted() {
             this.$axios.get(`/email-verify?hash=${this.$route.query.hash}`)
+                .then(response => {
+                    if(response.data.isBusiness === true){
+                        this.$auth.loginWith('user', {
+                            url: `${this.$axios.defaults.baseURL}/login`,
+                            data: {
+                                email: response.data.email,
+                                password: atob(response.data.password)
+                            }
+                        })
+                            .then((res) => {
+                                const {user} = this.$auth;
+                                this.$router.push('/office/branches/add')
+                            })
+                    }
+                })
         }
     }
 </script>

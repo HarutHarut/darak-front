@@ -6,11 +6,11 @@
     }
 
     .partner-box {
-        background-color: $bg-light;
-        text-align: center;
+        border: 1px solid #dddddddd;
+        border-radius: 12px;
         img {
-            height: 80px;
-            object-fit:contain;
+            height: 160px;
+            object-fit: contain;
         };
     }
 

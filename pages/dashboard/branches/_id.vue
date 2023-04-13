@@ -55,7 +55,7 @@
          id="modal-working-hours"
          scrollable
          size="md"
-         title="Edit working days and time"
+         :title="$t('modals.title')"
       >
          <WorkingHour
             :form="branch.opening_times"

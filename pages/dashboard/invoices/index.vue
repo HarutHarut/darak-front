@@ -146,9 +146,10 @@
                                     <b-td>
                                         <span>
                                             <span v-if="invoice.status !== 1" class="view-cell">
-                                               <button @click="changeStatus(invoice.id, 1)">
+                                               <button  v-b-modal.cancel-invoice-modal @click="openCancelModal(invoice.id)">
                                                   <svg-icon class="base-icon" name="add-button" />
                                                </button>
+<!--                                               <button v-b-modal.cancel-order-modal  @click="openCancelModal(order.id)">{{ $t("form.btn.cancel") }}</button>-->
                                             </span>
                                         </span>
                                     </b-td>
@@ -163,6 +164,20 @@
                 </section>
             </b-col>
         </b-row>
+        <b-modal id="cancel-invoice-modal" hide-footer hide-header>
+            <p class="text-center">{{ $t("form.btn.cancelThisInvoice") }}?</p>
+            <div class="text-center">
+                <b-button class="mt-3 btn-success" @click="changeStatus()">
+                    {{ $t("form.btn.Yes") }}
+                </b-button>
+                <b-button
+                        class="mt-3 btn-danger"
+                        @click="$bvModal.hide('cancel-order-modal')"
+                >
+                    {{ $t("form.btn.No") }}
+                </b-button>
+            </div>
+        </b-modal>
 
     </b-container>
 </template>
@@ -208,7 +223,9 @@
                     yearId: '',
                     monthId: '',
                     search: ''
-                }
+                },
+                invoiceID: null,
+                status: 0
             }
         },
 
@@ -303,17 +320,23 @@
                         this.invoices = response.data
                     })
             },
-            changeStatus(id, status){
+            changeStatus(){
+                // console.log(id, 'invoice id')
                 this.$axios
                     .post("invoices/change-status", {
-                        invoice_id: id,
-                        status: status
+                        invoice_id: this.invoiceID,
+                        status: this.status
                     })
                     .then((res) => {
                         this.getInvoices();
+                        this.$bvModal.hide("cancel-invoice-modal")
                     })
             },
-
+            openCancelModal(id) {
+                this.invoiceID = id,
+                this.status = 1,
+                this.$bvModal.show("cancel-invoice-modal")
+            },
         },
 
         mounted() {

@@ -64,8 +64,6 @@
                         <button type="button" class="btn-blue px-3">Search</button>
                     </div>
                 </b-modal>
-
-
                 <ul class="place-cards scroll-box">
                     <li v-if="filteredBranches.length">
                         <p>{{ filteredBranches.length + ' ' + $t('map.mapArea') }}</p>
@@ -78,6 +76,7 @@
                     </li>
                 </ul>
             </div>
+
             <div class="map-content h-100">
                 <GmapMap
                         :center="{lat: lot, lng: lng}"
@@ -108,8 +107,8 @@
              :meta_title="$t('meta.cityTitle', { city: this.cityName })"
              :meta_keywords="$t('meta.cityKeywords', { city: this.cityName })"
              :meta_description="$t('meta.cityDescription', { city: this.cityName })"
-             :og_image="cityLogo ? cityLogo : '/_nuxt/assets/img/logo/logo-black-text.png'"
-             :twitter_image="'/_nuxt/assets/img/logo/logo-black-text.png'"
+             :og_image="cityLogo ? cityLogo : this.$config.cdnUrl + '/img/logo.jpg'"
+             :twitter_image="cityLogo ? cityLogo : this.$config.cdnUrl + '/img/logo.jpg'"
              >
         </Seo>
     </div>
@@ -156,6 +155,7 @@
                     openDayNight: 0,
                     bestRate: 0,
                     cardPayment: 0,
+                    currency: 'EUR'
                 },
                 dateRange: {
                     startDate: null,
@@ -239,10 +239,12 @@
 
         },
         mounted() {
+            this.seoImage = window.location.host+"/_nuxt/assets/img/logo/logo-white-text.png";
             this.lng = Number(this.$route.query.lng)
             this.lot = Number(this.$route.query.lot)
             this.cityName = this.$route.query.q;
-            console.log(this.cityName, 'nanwsnananan')
+
+            this.queryParams.currency = this.$store.getters["home/currency"];
             this.getCity();
             // this.logo = this.props.cityLogo;
             // this.cityDesc = this.$t('meta.cityDescription', { city: this.city })

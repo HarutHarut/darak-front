@@ -9,6 +9,7 @@
         <b-col lg="8">
           <div class="base-card card mb-3">
             <div class="card-body">
+              <a :href="'/pdf/Questions texts_' + $i18n.locale + '.pdf'" target="_blank" class="pdf-link">{{ $t("dashboard.title.howToUse") }}</a>
               <h2 class="title-secondary text-center">
                 {{ $t("dashboard.edit.branch") }}
               </h2>
@@ -53,7 +54,6 @@
 
                       <validation-provider
                             v-slot="validationContext"
-                            :rules="{ required: true }"
                             style="width: 100%"
                             name="phone"
                         >
@@ -62,7 +62,6 @@
                                   v-model="form.phone"
                                   class="form-input"
                                   :default-country-code="countryCode"
-                                  required
                                   error-color="#FF0000"
                                   clearable
                                   :translations="translations"
@@ -164,7 +163,7 @@
                         >
                           <b-form-radio-group
                               v-model="form.status"
-                              class="d-flex flex-wrap my-2"
+                              class="d-flex flex-wrap my-2 branch-status-radio"
                               :options="optionsStatus"
                               name="status"
                           ></b-form-radio-group>
@@ -290,17 +289,18 @@ export default {
       optionsCountry: [],
       optionsCurrency: [],
       optionsStatus: [
-        {value: 1, text: "Active"},
-        {value: 0, text: "Inactive"}
+        {value: 1, text: this.$t("dashboard.statuses.active")},
+        {value: 0, text: this.$t("dashboard.statuses.inActive")}
       ],
       optionsCardPayment: [
-        {value: 1, text: "Yes"},
-        {value: 0, text: "No"}
+        {value: 1, text: this.$t("dashboard.list.Yes")},
+        {value: 0, text: this.$t("dashboard.list.No")}
       ],
       translations: {
         example: this.$t("phoneNumber.example"),
         countrySelectorLabel: this.$t("phoneNumber.countrySelectorLabel"),
         countrySelectorError: this.$t("phoneNumber.countrySelectorError"),
+        phoneNumberLabel: this.$t("form.input.tel"),
       },
     }
   },
@@ -470,12 +470,21 @@ export default {
                   media[previewKey][fileKey]
               )
             }
-          } else {
-            formData.append(`media[${previewKey}]`, media[previewKey].file)
           }
-          formData.append(`mediaKey[${previewKey}]`, media[previewKey].default)
+          else
+            {
+            formData.append(
+                    `media[${previewKey}]`,
+                    media[previewKey].file
+            )
+          }
+          formData.append(
+                  `mediaKey[${previewKey}]`,
+                  media[previewKey].default)
         }
-      } else {
+      }
+      else
+        {
         formData.append("media[]", [])
       }
 
@@ -494,7 +503,7 @@ export default {
               case 422:
                 const {errors} = error.response.data
                 this.$refs.branchAdd.setErrors(errors)
-
+                this.errors = errors;
                 for (const prop in errors) {
                   if (
                       prop.search("description") > -1 ||

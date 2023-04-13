@@ -30,7 +30,7 @@
                   <li v-for="(value, key) in images" v-bind:key="key">
                      <div
                         class="img"
-                        :class="{ isDefault: value.default === 1 }"
+                        :class="{ isDefault: value.default}"
                      >
                         <img :src="value.url"
                            class="image"

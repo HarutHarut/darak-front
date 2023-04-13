@@ -85,7 +85,7 @@
                   </b-tr>
                </b-thead>
                <b-tbody>
-                  <b-tr :key="order.id" v-for="order in accountOrders">
+                  <b-tr :key="order.id" v-for="(order, index) in accountOrders">
                      <b-th> <NuxtLink :to="prepareUrl(`/account/orders/${order.booking_number}`)" style="text-decoration: underline;"> #{{ order.booking_number }} </NuxtLink> </b-th>
                      <b-td><span :key="branchInfo.id" v-for="(branchInfo) in order.bookings.slice(0, 1)">{{branchInfo.branch.name | getTransValue($i18n.locale)}}</span></b-td>
                      <b-td>{{ order.check_in | dateTable }}</b-td>
@@ -93,23 +93,23 @@
                      <b-td >{{order.priceCurrency}}</b-td>
                      <b-td><span class="status-order" :class="order.status">{{order.status }}</span></b-td>
                      <b-td>
-                        <b-button v-if="order.status != 'canceled' && check(order.check_in)" @click="openCancelModal(order.id)" variant="outline-danger" size="sm" v-b-modal.cancel-order-modal >{{ $t("form.btn.cancel") }}</b-button>
+                        <b-button v-if="order.status == 'pending' && check(order.check_in)" @click="openCancelModal(order.id, index)" variant="outline-danger" size="sm" v-b-modal.cancel-order-modal >
+                           {{ $t("form.btn.cancel") }}
+                        </b-button>
                      </b-td>
                   </b-tr> 
                </b-tbody>
             </b-table-simple>
- 
          </b-col>
       </b-row>
 
       <b-modal id="cancel-order-modal" hide-footer hide-header centered>
          <p class="text-center">{{ $t("dashboard.fields.cancelOrder") }}</p>
          <div class="text-center">
-            <b-button class="mt-3 btn-success" @click="cancelOrder()"> {{ $t("dashboard.fields.Yes") }} </b-button>
-            <b-button class="mt-3 btn-danger" @click="$bvModal.hide('cancel-order-modal')"> {{ $t("dashboard.fields.No") }} </b-button>
+            <b-button class="mt-3 btn-success" @click="cancelOrder()"> {{ $t("dashboard.fields.yes") }} </b-button>
+            <b-button class="mt-3 btn-danger" @click="$bvModal.hide('cancel-order-modal')"> {{ $t("dashboard.fields.no") }} </b-button>
          </div>
       </b-modal>
-
    </b-container>
 </template>
 
@@ -128,7 +128,7 @@ export default {
          return date.toString();
       },
       dateTable(val) {
-         const date = moment(val).format('D MMMM YYYY, h:mm:ss ')
+         const date = moment(val).format('D MMMM YYYY, HH:mm:ss ')
          return date.toString()
       },
       getTransValue(val, lang) {
@@ -138,18 +138,18 @@ export default {
 
    data() {
       return {
-         today: new Date(), 
+         today: new Date(),
          status: 'all',
          optionsStatus: [
             { value: "all", text: "All"},
             { value: "completed", text: "completed" },
-            { value: "canceled", text: "canceled" }, 
+            { value: "canceled", text: "canceled" },
             { value: "pending", text: "pending" },
          ],
          accountOrders: null,
          dateRange: {
             startDate: null,
-            endDate: null, 
+            endDate: null,
          },
          currencyCourses:null,
          userData: null,
@@ -158,6 +158,10 @@ export default {
          cancelButton: false,
          cancelButtonArray:[],
          orderId: null,
+         orderIndex: null,
+         // perPage: 3,
+         // total: 0,
+         // currentPage: 1,
       }
    },
 
@@ -173,14 +177,21 @@ export default {
             return true
          }
       },
-      searchOrders() {
+      searchOrders(page = 1) {
          // console.log(this.dateRange.startDate)
          this.$axios
-            .post("orders/order", {
-               status: this.status,
-               check_in:this.dateRange.startDate,
-               check_out:this.dateRange.endDate
-            })
+             .get(`orders/order?page=${page}&account=${true}&status=${this.status}&check_in=${moment(this.dateRange.startDate).format(
+                 "YYYY-MM-DD HH:mm:ss"
+             )}&check_out=${moment(this.dateRange.endDate).format(
+                 "YYYY-MM-DD HH:mm:ss"
+             )}`)
+
+            // .post("orders/order", {page = 1
+            //    account: true,
+            //    status: this.status,
+            //    check_in: this.dateRange.startDate,
+            //    check_out: this.dateRange.endDate
+            // })
             .then(({ data }) => {
                this.accountOrders = data.orders.data
                this.currencyCourses = data.currency_courses
@@ -189,12 +200,14 @@ export default {
 
       getOrders() {
          this.$axios
-            .post("orders/order")
+             .get(`orders/order?account=${true}&status=${this.status}`)
+
+                 // .post("orders/order", {account: true, status: this.status})
             .then(({ data }) => {
                this.accountOrders = data.orders.data
                this.currencyCourses = data.currency_courses
 
-               this.accountOrders.forEach(item => {      
+               this.accountOrders.forEach(item => {
                   let currencyCoursesUser = this.userData.currency
                   let itemCurrency = item.currency
                   // if(currencyCoursesUser !== null && currencyCoursesUser !== itemCurrency && currencyCoursesUser !== "AMD" && itemCurrency !== "AMD") {
@@ -208,7 +221,7 @@ export default {
                   //    item.price *= this.currencyCourses[`${itemCurrency}`]
                   // }
                   // item.price = item.price.toFixed(2)
- 
+
                   let today = moment().format("YYYY-MM-DD HH:mm:ss")
                   if(today < item.check_in ) {
                      this.cancelButton = true
@@ -219,11 +232,13 @@ export default {
                   this.cancelButtonArray.push(this.cancelButton)
                })
 
-            })      
-            
+            })
+
       },
-      
+
       cancelOrder() {
+         this.$bvModal.hide('cancel-order-modal')
+         this.accountOrders[this.orderIndex].status = 'canceled'
             this.$axios.post(`cancel-order`, {
                 order_id: this.orderId
             })
@@ -234,27 +249,27 @@ export default {
                 variant: "success",
                 solid: true
                 });
-              this.$bvModal.hide('cancel-order-modal')
             }).catch(error => {
                this.$bvToast.toast(error.response.data.message, {
                   variant: 'danger',
                   solid: true
                });
+               this.accountOrders[this.orderIndex].status = 'pending'
             })
         },
 
-      openCancelModal(id) {
-         // console.log(id)
+      openCancelModal(id, index) {
          this.orderId = id
+         this.orderIndex = index
          this.$bvModal.show("cancel-order-modal")
       },
-   }, 
- 
+   },
+
    mounted() {
-      this.userData = this.$auth.user  
+      this.userData = this.$auth.user
       this.getOrders()
       this.localStorageCurrency = localStorage.currency
    },
-   
+
 }
 </script>

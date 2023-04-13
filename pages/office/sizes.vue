@@ -88,13 +88,13 @@
       <p class="text-center">{{ $t('dashboard.fields.deleteThisItem') }}?</p>
       <div class="text-center">
         <b-button class="mt-3 btn-success" @click="deleteSize()"
-        >{{ $t('dashboard.fields.Yes') }}
+        >{{ $t('dashboard.fields.yes') }}
         </b-button
         >
         <b-button
             class="mt-3 btn-danger"
             @click="$bvModal.hide('size-delete')"
-        >{{ $t('dashboard.fields.No') }}
+        >{{ $t('dashboard.fields.no') }}
         </b-button
         >
       </div>

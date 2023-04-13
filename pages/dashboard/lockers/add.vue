@@ -105,12 +105,15 @@
 
 <script>
 import LockerForm from "../../../components/buisness/lockers/locker-form"
+import global from "~/mixins/global.js"
 
 export default {
   components: {
     LockerForm
   },
   props: ['branch'],
+  mixins: [global],
+
   data() {
     return {
       currency: '€',
@@ -152,15 +155,46 @@ export default {
       this.$axios
           .post("/lockers/create", form)
           .then(({data}) => {
-            console.log(data);
-
+            this.$bvToast.toast(`Locker created successfully.`, {
+              title: 'Locker created successfully',
+              variant: "success",
+              solid: true
+            })
+            let id = data.locker.id;
+            if (form.type == 1)
+            {
+              console.log('erwfwscxvsdfd')
+              let path = this.prepareUrl(`/dashboard/branches/` + this.lockerBranch.slug);
+              this.$router.push({
+                path: path,
+              })
+            }
+            else
+            {
+              this.form = {
+                count: null,
+                price_per_day: null,
+                price_per_hour: null,
+                size_id: null,
+                branch_id: this.form.branch_id,
+              },
+                      this.prices = [
+                        {
+                          range_start: null,
+                          range_end: null,
+                          price: null
+                        }
+                      ],
+                      this.transError = false,
+                      this.priceError = false,
+                      this.errors = []
+            }
           })
           .catch(error => {
             switch (error.response.status) {
               case 422:
                 const {errors} = error.response.data
                 this.errors = errors
-
                 for (const prop in errors) {
                   if (prop.search("name") > -1) {
                     this.transError = true
@@ -170,7 +204,14 @@ export default {
                     this.priceError = true
                   }
                 }
-                break
+                break;
+              case 400:
+                this.$bvToast.toast(error.response.data.data.error, {
+                  variant: "danger",
+                  solid: true
+                })
+                break;
+
             }
           })
           .finally(() => {
@@ -199,7 +240,7 @@ export default {
   // },
   mounted() {
     this.lockerBranch = this.$route.params;
-    console.log(this.lockerBranch)
+    console.log(this.lockerBranch, 'this.lockerBranch')
     this.currency = this.$route.params.currency;
   }
 }

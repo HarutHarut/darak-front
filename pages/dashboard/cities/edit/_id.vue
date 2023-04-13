@@ -40,6 +40,12 @@
                         ></b-form-radio-group>
                       </b-form-group>
                     </b-col>
+                    <b-col sm="12" class="mt-3">
+                      <CityDescTranslation
+                              :about_city="form.about_city"
+                              :description="form.description"
+                      ></CityDescTranslation>
+                    </b-col>
                   </b-row>
                   <b-row>
                     <b-col>
@@ -71,6 +77,37 @@
                       <p class="error-text">{{ errorLogoMessage }}</p>
                     </b-col>
                   </b-row>
+
+                  <b-row>
+                    <b-col>
+                      <div class="multiple-upload image-upload-box mb-3">
+                        <div class="control-form">
+                          <div class="upload-img-content">
+                            <div>
+                              <label for="preview_file"
+                                     class="text-center my-2 d-flex align-items-center justify-content-center">
+                                <span class="mr-2">{{ $t("dashboard.upload.wallpaper") }}</span>
+                                <svg-icon class="md-icon" name="download"></svg-icon>
+                              </label>
+                              <b-form-file type="file" id="preview_file" class="upload-file d-none" @change="addBanner"
+                                           ref="inputer"
+                                           accept="image/png,image/jpeg,image/gif,image/jpg"></b-form-file>
+                            </div>
+                            <ul class=" border upload-img-content p-2 d-flex flex-wrap">
+                              <li v-if="banner.file || city.preview">
+                                <p class="img">
+                                  <img :src="banner.url" class="image"/>
+                                  <a class="close" @click="deleteBanner()">×</a>
+                                </p>
+                              </li>
+                            </ul>
+                          </div>
+                          <p class="help-block text-center">{{ $t("dashboard.upload.imageRecommendations") }}</p>
+                        </div>
+                      </div>
+                      <p class="error-text">{{ errorBannerMessage }}</p>
+                    </b-col>
+                  </b-row>
                   <div class="text-center">
                     <button type="submit" class="btn btn-blue btn-form mb-3">
                       {{ $t("dashboard.btn.update") }}
@@ -89,10 +126,13 @@
 <script>
 import _ from 'lodash'
 import AutocompleteAddress from "../../../../components/utilities/autocomplete-address"
+import CityDescTranslation from "../../../../components/dashboard/city/city-desc-translation"
+
 
 export default {
   components: {
-    AutocompleteAddress
+    AutocompleteAddress,
+    CityDescTranslation
   },
   data() {
     return {
@@ -100,6 +140,24 @@ export default {
       name: '',
       form: {
         name: "something",
+        about_city: {
+          fr: "",
+          am: "",
+          ru: "",
+          ch: "",
+          de: "",
+          sp: "",
+          en: ""
+        },
+        description: {
+          fr: "",
+          am: "",
+          ru: "",
+          ch: "",
+          de: "",
+          sp: "",
+          en: ""
+        },
         lat: 40.177,
         lng: 44.503,
         top: 1
@@ -112,13 +170,18 @@ export default {
         url: null,
         file: null
       },
+      banner: {
+        url: null,
+        file: null
+      },
       errorMessage: null,
-      errorLogoMessage: null
+      errorLogoMessage: null,
+      errorBannerMessage: null,
     }
   },
   methods: {
     create() {
-      if (!this.logo.file && !this.city.logo) {
+      if (!this.logo.file && !this.city.logo || this.logo.file === 'null') {
         this.errorLogoMessage = 'Logo is required.';
         return false;
       }
@@ -130,11 +193,50 @@ export default {
       const formData = new FormData();
 
       for (const prop in this.form) {
-
-        formData.append(prop, this.city[prop]);
+        if (prop === "name") {
+          formData.append(
+                  `name`,
+                  this.form.name
+          )
+        } else if (prop === "description") {
+          for (let previewKey in this.form[prop]) {
+            formData.append(
+                    `description[${previewKey}]`,
+                    this.form[prop][previewKey]
+            )
+          }
+        }else if (prop === "about_city") {
+          for (let previewKey in this.form[prop]) {
+            formData.append(
+                    `about_city[${previewKey}]`,
+                    this.form[prop][previewKey]
+            )
+          }
+        }else if (prop === "lat") {
+          formData.append(
+                  `lat`,
+                  this.form.lat
+          )
+        }else if (prop === "lng") {
+          formData.append(
+                  `lng`,
+                  this.form.lng
+          )
+        }else if (prop === "top") {
+          formData.append(
+                  `top`,
+                  this.form.top
+          )
+        }else{
+          formData.append(prop, this.form[prop]);
+        }
       }
-      if (this.logo.file) {
+
+      if (this.logo.file && this.logo.file) {
         formData.append('image', this.logo.file);
+      }
+      if (this.banner.file && this.banner.file) {
+        formData.append('banner', this.banner.file);
       }
       formData.append('_method', 'put');
 
@@ -191,6 +293,13 @@ export default {
       };
     },
 
+    addBanner(event) {
+      this.banner = {
+        url: URL.createObjectURL(event.target.files[0]),
+        file: event.target.files[0]
+      };
+    },
+
     deleteLogo() {
       this.logo = {
         url: null,
@@ -199,10 +308,20 @@ export default {
       this.city.logo = null
     },
 
+    deleteBanner() {
+      this.banner = {
+        url: null,
+        file: null
+      }
+      this.city.preview = null
+    },
+
     getCityById(id) {
       this.$axios.get(`admin/cities/${id}`).then((response) => {
         this.city = response.data.city
+        this.form = response.data.city
         this.logo.url = response.data.city.logo
+        this.banner.url = response.data.city.preview
       })
     },
 

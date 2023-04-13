@@ -123,17 +123,17 @@
     <section class="how-works-section static-content py-4 py-lg-5">
       <b-container>
         <b-row v-if="data">
-          <b-col v-html="getTransValue(data.description, $i18n.locale)"/>
+          <b-col v-html="data['description_' + $i18n.locale]" />
         </b-row>
       </b-container>
     </section>
 
     <Seo v-if="data"
-         :meta_title="data.meta_title"
-         :meta_keywords="data.meta_description"
-         :meta_description="data.meta_description"
-         :og_image="'/_nuxt/assets/img/logo/logo-black-text.png'"
-         :twitter_image="'/_nuxt/assets/img/logo/logo-black-text.png'"
+         :meta_title="data.meta_title ? data.meta_title : ''"
+         :meta_keywords="data.meta_keywords ? data.meta_keywords : ''"
+         :meta_description="data.meta_description ? data.meta_description : ''"
+         :og_image="this.$config.cdnUrl + '/img/logo.jpg'"
+         :twitter_image="this.$config.cdnUrl + '/img/logo.jpg'"
     >
     </Seo>
   </div>

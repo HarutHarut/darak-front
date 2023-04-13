@@ -1,7 +1,7 @@
 <template>
    <div id="app-page">
       <div class="wrapper">
-         <Header/>
+         <Header :class="this.$router.history.current.path.includes('emailVerify') && 'header-white-bg'"/>
          <main class="main-page">
             <Nuxt/>
          </main>

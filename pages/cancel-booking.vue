@@ -33,6 +33,27 @@
     }
 </script>
 
-<style scoped>
+<style>
+
+.header {
+    background-color: #fff;
+    color: #212529;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+.header .menu-link, .header .navbar-nav .dropdown-toggle {
+    color: #212529 !important;
+}
+.header .navbar-nav .dropdown-toggle svg {
+    fill: #212529 !important;
+}
+.header .navbar-collapse .menu-link.btn-color {
+    color: #fff !important;
+}
+.header .logo-img.logo-white {
+    display: none;
+}
+.header .logo-img.logo-black {
+    display: block;
+}
 
 </style>

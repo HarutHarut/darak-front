@@ -6,12 +6,12 @@
                <img
                   :src="require('@/assets/img/logo/logo-white-text.png')"
                   class="logo-img logo-white img-fluid"
-                  alt=""
+                  alt="logo"
                />
                <img
                   :src="require('@/assets/img/logo/logo-black-text.png')"
                   class="logo-img logo-black img-fluid"
-                  alt=""
+                  alt="logo"
                />
             </NuxtLink>
 
@@ -21,7 +21,7 @@
                   <template #button-content>
                      <img
                         :src="require('../../assets/img/lang/' + flag)"
-                        alt=""
+                        alt='flag'
                         class="lang-img"
                      />
                   </template>
@@ -31,7 +31,7 @@
                   >
                      <img
                         :src="require('@/assets/img/lang/united-kingdom.png')"
-                        alt=""
+                        alt="united kingdom"
                         class="lang-img"
                      />
                   </b-dropdown-item>
@@ -41,7 +41,7 @@
                   >
                      <img
                         :src="require('@/assets/img/lang/armenia.png')"
-                        alt=""
+                        alt="armenia"
                         class="lang-img"
                      />
                   </b-dropdown-item>
@@ -51,7 +51,7 @@
                   >
                      <img
                         :src="require('@/assets/img/lang/russia.png')"
-                        alt=""
+                        alt="russia"
                         class="lang-img"
                      />
                   </b-dropdown-item>
@@ -61,7 +61,7 @@
                   >
                      <img
                         :src="require('@/assets/img/lang/france.png')"
-                        alt=""
+                        alt="france"
                         class="lang-img"
                      />
                   </b-dropdown-item>
@@ -72,7 +72,7 @@
                   >
                      <img
                         :src="require('@/assets/img/lang/china.png')"
-                        alt=""
+                        alt="china"
                         class="lang-img"
                      />
                   </b-dropdown-item>
@@ -90,6 +90,9 @@
                      </b-dropdown-item>
                   </b-nav-item-dropdown>
                </div>
+               <div v-if="!userData" v-b-modal.modal-sign class="signin-link flex-shrink-0">    
+                  {{ $t("form.signIn") }}
+               </div>
 
                <b-nav-item-dropdown right>
                   <!-- Using 'button-content' slot -->
@@ -97,7 +100,7 @@
                      <span v-if="userData">
                         {{ userData.name }}
                      </span>
-                     <svg-icon class="base-icon" name="user" />
+                     <!-- <svg-icon class="base-icon" name="user" /> -->
                   </template>
                   <div>
                      <div v-if="userData && userData.role.name">
@@ -151,12 +154,7 @@
                            $t("form.logOut")
                         }}</b-dropdown-item>
                      </div>
-                     <b-dropdown-item
-                        v-if="!userData"
-                        v-b-modal.modal-sign
-                        href="#"
-                        >{{ $t("list.profile") }}</b-dropdown-item
-                     >
+                     <!-- <b-ds -->
                   </div>
                </b-nav-item-dropdown>
             </b-navbar-nav>
@@ -253,7 +251,7 @@ export default {
             },*/
          ],
          selectedCurrency: "EUR",
-         currencies: ["AMD", "USD", "RUB", "EUR"],
+         currencies: ["AMD", "USD", "RUB", "EUR", "GBP", "GEL"],
          menu: false
       }
    },

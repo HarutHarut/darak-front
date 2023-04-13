@@ -9,6 +9,7 @@
         <b-col lg="8">
           <div class="base-card card mb-3">
             <div class="card-body">
+              <a :href="'/pdf/Questions texts_' + $i18n.locale + '.pdf'" target="_blank" class="pdf-link">{{ $t("dashboard.title.howToUse") }}</a>
               <h2 class="title-secondary text-center ">
                 {{ $t("dashboard.add.branch") }}
               </h2>
@@ -159,7 +160,7 @@
 
                           <b-form-radio-group
                               v-model="form.status"
-                              class="d-flex flex-wrap my-2"
+                              class="d-flex flex-wrap my-2 branch-status-radio"
                               :options="optionsStatus"
                               name="status"
                           ></b-form-radio-group>
@@ -238,7 +239,7 @@
                               <b-form-file
                                   type="file"
                                   id="fileUpload"
-                                  class="upload-file"
+                                  class="upload-file"form
                                   @change="addImg"
                                   ref="inputer"
                                   style="display: none"
@@ -368,17 +369,18 @@ export default {
       optionsCountry: [],
       optionsCurrency: [],
       optionsStatus: [
-        {value: 1, text: "Active"},
-        {value: 0, text: "Inactive"}
+        {value: 1, text: this.$t("dashboard.statuses.active")},
+        {value: 0, text: this.$t("dashboard.statuses.inActive")}
       ],
       optionsCardPayment: [
-        {value: 1, text: "Yes"},
-        {value: 0, text: "No"}
+        {value: 1, text: this.$t("dashboard.list.Yes")},
+        {value: 0, text: this.$t("dashboard.list.No")}
       ],
       translations: {
         example: this.$t("phoneNumber.example"),
         countrySelectorLabel: this.$t("phoneNumber.countrySelectorLabel"),
         countrySelectorError: this.$t("phoneNumber.countrySelectorError"),
+        phoneNumberLabel: this.$t("form.input.tel"),
       },
     }
   },

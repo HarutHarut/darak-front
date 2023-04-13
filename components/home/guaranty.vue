@@ -5,7 +5,7 @@
             <b-row class="align-items-center">
                 <b-col md="6">
                     <div class="img-box">
-                        <img :src="require('@/assets/img/guaranty/luglocker-girl.png')" alt="" />
+                        <img :src="require('@/assets/img/guaranty/luglocker-girl.png')" alt="luglockers girl" />
                     </div>
                 </b-col>
                 <b-col  md="6" lg="4">

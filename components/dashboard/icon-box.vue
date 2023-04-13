@@ -11,13 +11,13 @@
         </ul>
 
         <ul class="right-icon-list d-flex flex-wrap justify-content-center">
-            <li class="mb-2">
-              <a class="d-flex align-items-center" href="#">
-                <svg-icon class="md-icon" name="eye"></svg-icon>
-                <span>{{ $t("dashboard.list.views") }}</span>
-                <span class="count">&plus;20</span>
-              </a>
-            </li>
+<!--            <li class="mb-2">-->
+<!--              <a class="d-flex align-items-center" href="#">-->
+<!--                <svg-icon class="md-icon" name="eye"></svg-icon>-->
+<!--                <span>{{ $t("dashboard.list.views") }}</span>-->
+<!--                <span class="count">&plus;20</span>-->
+<!--              </a>-->
+<!--            </li>-->
 
             <li class="mb-2">
               <a class="d-flex align-items-center" href="#">

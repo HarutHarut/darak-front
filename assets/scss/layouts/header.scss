@@ -8,7 +8,7 @@
     width: 100%;
     top: 0;
     left: 0;
-    z-index: 99999999999;
+    z-index: 999;
     transition: background-color .3s ease;
 
     #buttonToggle {
@@ -174,6 +174,55 @@
             }
         }
     }
+
+    &.fixed {
+        background-color: $color-white;
+        color: $default-color;
+        // box-shadow: $shadow-bottom;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+        .logo-white {
+            display: none;
+        }
+
+        .logo-black {
+            display: block;
+        }
+
+        .nav-link  {
+            color: $color-black;
+            
+            svg {
+                fill: $color-black;
+                color: $color-black;
+            }
+        }
+
+        .navbar-toggler {
+            svg {
+                fill: $color-black;
+            }
+        }
+
+        .menu-link {
+            color: $default-color;
+            &.btn-color {
+                color: $color-white;
+                &:hover {
+                    color: $color-white;
+                }
+                &:focus {
+                    color: $color-white;
+                }
+            }
+        }
+
+        .navbar {
+            .base-icon {
+                fill: $default-color;
+            }
+        }
+    }    
   
 }
 
@@ -295,52 +344,6 @@
     }
 }
 
-@media (min-width: 992px) {
-    .header {
-        &.fixed {
-            background-color: $color-white;
-            color: $default-color;
-            // box-shadow: $shadow-bottom;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-
-            .logo-white {
-                display: none;
-            }
-
-            .logo-black {
-                display: block;
-            }
-
-            .nav-link  {
-                color: $color-black;
-                
-                svg {
-                    fill: $color-black;
-                    color: $color-black;
-                }
-            }
-
-            .navbar-toggler {
-                svg {
-                    fill: $color-black;
-                }
-            }
-
-            .menu-link {
-                color: $default-color;
-                &.btn-color {
-                    color: $color-white;
-                    &:hover {
-                        color: $color-white;
-                    }
-                    &:focus {
-                        color: $color-white;
-                    }
-                }
-            }
-        }
-    }
-}
 
 @media (min-width: 1024px) {
     body.modal-open {
@@ -360,12 +363,16 @@
 
 @media (max-width: 991px) {
     .header {
-        background-color: $color-white;
-        color: $default-color;
-        box-shadow: $shadow-bottom;
+
+        .container {
+            max-width: 100% !important;
+        }
 
         .navbar {
             padding: 0;
+            .base-icon {
+                fill: $color-white;
+            }
         }
 
         .navbar-toggler {
@@ -394,46 +401,30 @@
 
             .menu-item {
                 margin-bottom: 15px;
+                .menu-link {
+                    color: $default-color;
+                }
+                &:last-child {
+                    .menu-link {
+                        color: $color-white;
+                    }
+                }
             }
         }
 
         .logo-white {
-            display: none;
-        }
-
-        .logo-black {
             display: block;
         }
 
-    
-        .navbar-nav {
-            .nav-link  {
-                color: $default-color;
-            }
-            .dropdown-toggle {
-                svg {
-                    fill: $default-color;
-                }
-            }
-        }
-
-        .navbar-toggler {
-            svg {
-                fill: $default-color;
-            }
-        }
-
-        .menu-link {
-            &.btn-color {
-                color: $color-white;
-                &:hover,
-                &:focus {
-                    color: $color-white;
-                }
-            }
+        .logo-black {
+            display: none;
         }
     }
   
+}
+
+.signin-link:hover {
+    color: $color-secondary;
 }
 
 @media (max-width: 991px) {

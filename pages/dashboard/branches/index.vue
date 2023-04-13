@@ -6,8 +6,23 @@
           <PageTitle :title="title" :image="image"/>
           <div class="d-flex flex-wrap align-items-center mb-3">
             <div class="mr-3 mb-2 mb-sm-0">
-              <b-form-select @change="searchBranch" v-model="selected">
-                <b-form-select-option value="0">
+              <b-form-select @change="getBranches" v-model="verify_selected">
+                <b-form-select-option value="">
+                  All
+                </b-form-select-option>
+                <b-form-select-option
+                        value="1">
+                  {{ $t('dashboard.statuses.verified') }}
+                </b-form-select-option>
+                <b-form-select-option
+                        value="0">
+                  {{ $t('dashboard.statuses.not_verified') }}
+                </b-form-select-option>
+              </b-form-select>
+            </div>
+            <div class="mr-3 mb-2 mb-sm-0">
+              <b-form-select @change="getBranches" v-model="selected">
+                <b-form-select-option value="">
                   All
                 </b-form-select-option>
                 <b-form-select-option
@@ -18,7 +33,7 @@
                 </b-form-select-option>
               </b-form-select>
             </div>
-            <SearchForm @searchEmit="search"/>
+            <SearchForm :value="this.search" @searchEmit="search"/>
           </div>
         </div>
         <section class="static-section position-relative">
@@ -26,7 +41,7 @@
             <h4 class="title p-3">{{ $t('dashboard.list.branchs') }}</h4>
           </div>
           <NuxtLink :to="prepareUrl('/dashboard/branches/add')" class="btn-add ml-auto">
-            <svg-icon class="base-icon" name="add-button"></svg-icon>
+            {{ $t('dashboard.add.branch') }}
           </NuxtLink>
           <b-table-simple responsive class="w-100 static-table">
             <b-thead>
@@ -139,7 +154,8 @@ export default {
       businessList: {},
       title: this.$t("dashboard.list.branchs"),
       image: "business-branchs",
-      selected: "0",
+      selected: "",
+      verify_selected: "",
       // filteredBranches: {},
       currentPage: 1,
       perPage: 15,
@@ -153,10 +169,21 @@ export default {
         this.$nuxt.$loading.start()
       })
       this.$axios
-          .get(`/branches?page=${page}`).then(({data}) => {
+          .get(`/branches?page=${page}&search=${this.searchText}&business_id=${this.selected}&verify=${this.verify_selected}`)
+          .then(({data}) => {
             this.currentPage = data.branches.current_page
-            this.total = data.branches.total
             this.allBranches = data.branches.data
+            this.total = data.branches.total
+
+            this.$router.replace({
+              query:
+                  {
+                    page: `${this.currentPage}`,
+                    search: `${this.searchText}`,
+                    business_id: `${this.selected}`,
+                    verify: `${this.verify_selected}`,
+                  }
+              });
           })
           .finally(() => {
             this.$nuxt.$loading.finish()
@@ -174,23 +201,9 @@ export default {
             this.$nuxt.$loading.finish()
           })
     },
-    searchBranch() {
-      const data = {};
-      if (this.searchText) {
-        data['search'] = this.searchText
-      }
-      if (this.selected > 0) {
-        data['business_id'] = this.selected
-      }
-      this.$axios.post('searchBranch', data).then(({data}) => {
-        this.currentPage = data.branches.current_page
-        this.total = data.branches.total
-        this.allBranches = data.branches.data
-      })
-    },
     search(value) {
       this.searchText = value;
-      this.searchBranch()
+      this.getBranches();
     },
     recommended(id) {
       this.$axios.post('admin/branches/recommended-status/' + id)
@@ -208,7 +221,11 @@ export default {
     },
   },
   mounted() {
-    this.getBranches()
+    let page = this.$route.query.page || 1;
+    this.searchText = this.$route.query.search || '';
+    this.verify_selected = this.$route.query.verify || '';
+    this.business_id = this.$route.query.business_id || '';
+    this.getBranches(page)
     this.getBusiness()
   },
   filters: {

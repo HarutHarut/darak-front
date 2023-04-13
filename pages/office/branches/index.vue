@@ -17,7 +17,7 @@
             <h4 class="title p-3">{{ $t('dashboard.list.branchs') }}</h4>
           </div>
           <NuxtLink :to="prepareUrl('/office/branches/add')" class="btn-add ml-auto">
-            <svg-icon class="base-icon" name="add-button"></svg-icon>
+            {{ $t('dashboard.add.branch') }}
           </NuxtLink>
           <b-table-simple responsive class="w-100 static-table">
             <b-thead>
@@ -126,12 +126,13 @@ export default {
     return {
       title: this.$t("dashboard.list.branchs"),
       image: "portfolio",
-      selected: null,
+      verify_selected: '',
       branches: [],
       currentPage: 1,
       perPage: 15,
       total: 0,
       counts: null,
+      searchText: null,
     }
   },
   async asyncData({ $axios }) {
@@ -149,11 +150,18 @@ export default {
         this.$nuxt.$loading.start()
       })
       this.$axios
-          .get(`/branches?page=${page}`)
+          .get(`/branches?page=${page}&search=${this.searchText}`)
           .then(({data}) => {
-            this.currentPage = data.branches.current_page
-            this.total = data.branches.total
-            this.branches = data.branches.data
+              this.currentPage = data.branches.current_page
+              this.total = data.branches.total
+              this.branches = data.branches.data
+              this.$router.replace({
+                  query:
+                      {
+                          page: `${this.currentPage}`,
+                          search: `${this.searchText}`,
+                      }
+              });
           })
           .finally(() => {
             this.$nuxt.$loading.finish()
@@ -161,14 +169,17 @@ export default {
     },
 
     search(val) {
-      const data = {
-        'search': val
-      }
-      this.$axios.post('searchBranch', data).then(({data}) => {
-        this.currentPage = data.branches.current_page
-        this.total = data.branches.total
-        this.branches = data.branches.data
-      })
+        this.searchText = val;
+        this.getBranches();
+
+      // const data = {
+      //   'search': val
+      // }
+      // this.$axios.post('searchBranch', data).then(({data}) => {
+      //   this.currentPage = data.branches.current_page
+      //   this.total = data.branches.total
+      //   this.branches = data.branches.data
+      // })
     },
     accept(id, status){
       this.$axios
@@ -177,12 +188,14 @@ export default {
                 status: status
               })
               .then((res) => {
-                this.getBranches();
+                this.getBranches(this.currentPage);
               })
     }
   },
   mounted() {
-    this.getBranches()
+      let page = this.$route.query.page || 1;
+      this.searchText = this.$route.query.search || '';
+      this.getBranches(page)
   },
   filters: {
     getTransValue(val, lang) {

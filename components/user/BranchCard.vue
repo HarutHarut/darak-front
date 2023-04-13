@@ -7,7 +7,7 @@
       </div>
       <div class="place-card-body d-flex flex-column justify-content-between flex-grow-1">
          <div>
-            <span class="title-quaternary place-card-title">{{ branch.name.en }}</span>
+            <span class="title-quaternary place-card-title">{{ branch.name | getTransValue($i18n.locale) }}</span>
          <!--         <span class="place-card-price">{{ branch.price }}</span>-->
             <span class="place-card-address d-flex">
                <svg-icon class="sm-icon" name="location"/>
@@ -55,6 +55,11 @@ export default {
    data(){
         return {}
    },
+   filters: {
+      getTransValue(val, lang) {
+         return val[lang]
+      },
+   }
 }
 </script>
 

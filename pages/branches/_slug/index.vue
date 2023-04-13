@@ -37,9 +37,9 @@
                               v-bind:key="star.index"
                            />
                         </div>
-                        <span class="rating-text">{{
-                           $t("reviews.noReviews")
-                        }}</span>
+                        <span class="rating-text" v-if="!branch.feedbacks.data.length">
+                           {{ $t("reviews.noReviews") }}
+                        </span>
                      </div>
                   </b-col>
                </b-row>
@@ -85,7 +85,7 @@
                   xl="4"
                   class="text-center mx-auto float-right mb-4 price-calc-block"
                >
-                  <div class="search-form-book m-0">
+                  <div class="search-form-book m-0" id="bookNow">
                      <h4 class="title-quaternary mb-0 ml-3">
                         {{ $t("form.lockerAvailable") }}.
                      </h4>
@@ -102,7 +102,7 @@
                            <div class="d-flex mb-2">
                               <b-form-datepicker
                                  :format="'YYYY-MM-DD'"
-                                 :min="today()"
+                                 :min="startMinDate"
                                  v-model="dateRange.startDate"
                                  @input="validateBookingTime('startDate')"
                                  class="w-100 mr-3"
@@ -290,7 +290,7 @@
                            class="btn btn-blue btn-large w-100 mt-3"
                            style="height: 50px; letter-spacing: 1px"
                         >
-                           {{ $t("form.btn.booking") }}
+                        {{ $t("map.BookNow") }}
                         </button>
                      </form>
                   </div>
@@ -350,7 +350,8 @@
                      <h2 class="title-secondary text-left">
                         {{ this.branch.name | getTransValue($i18n.locale) }}
                      </h2>
-                     <div v-html="this.branch.description.en"></div>
+                     <div v-if="this.branch.description[$i18n.locale] !== null" v-html="this.branch.description[$i18n.locale]"></div>
+                     <div v-else v-html="this.branch.description.en"></div>
                      <p class="my-2" v-if="this.branch.phone">
                         <svg-icon
                            class="
@@ -371,7 +372,7 @@
 
                      <p
                         class="mb-2"
-                        v-for="item in this.branch.social_network_urls"
+                        v-for="(item,index) in this.branch.social_network_urls"
                         v-bind:key="index"
                      >
                         <svg-icon
@@ -535,7 +536,7 @@
                                        ? reviewCard.user.avatar
                                        : require('@/assets/img/user-avatar.png')
                                  "
-                                 alt=""
+                                 alt="user avatar"
                               />
                            </div>
                            <div class="w-100 ml-2">
@@ -582,7 +583,6 @@
             </b-row>
          </section>
       </b-container>
-
       <section
          v-if="recommended.length"
          class="recommended-storages py-3 py-lg-5"
@@ -666,14 +666,17 @@
                </b-col>
             </b-row>
          </b-container>
+         <div class="mobile-booknow">
+            <button class="btn btn-blue btn-large" @click="scrollBookNow()">{{ $t("map.BookNow") }}</button>
+         </div>
       </section>
 
       <Seo
-         :meta_title="branch.meta_title"
+         :meta_title="prepareMetaTitle(branch)"
          :meta_keywords="branch.meta_keywords"
-         :meta_description="branch.meta_description"
-         :og_image="branch.logo"
-         :twitter_image="branch.logo"
+         :meta_description="prepareMetaDescription(branch)"
+         :og_image="branch.logo ? branch.logo : this.$config.cdnUrl + '/img/logo.jpg'"
+         :twitter_image="branch.logo ? branch.logo : this.$config.cdnUrl + '/img/logo.jpg'"
       >
       </Seo>
    </div>
@@ -685,7 +688,7 @@ import GoBack from "@/components/go-back"
 import Map from "@/components/home/map.vue"
 import CoolLightBox from "vue-cool-lightbox"
 import "vue-cool-lightbox/dist/vue-cool-lightbox.min.css"
-import moment from "moment"
+import moment from "moment-timezone"
 import Seo from "../../../components/seo/index.vue"
 import global from "~/mixins/global.js"
 import OpeningHoursCard from "../../../components/buisness/branch/opening-hours-card"
@@ -715,11 +718,15 @@ export default {
          branch_id: null,
          check_in: null,
          check_out: null,
+         startMinDate: this.today(),
          dateRange: {
             startDate: this.today(),
             endDate: this.today(),
             startTime: "10:00",
             endTime: "10:15",
+            startTimePoor: 10,
+            endTimePoor: 10,
+            diff: moment(new Date()).format('Z')
          },
          timesStart: [],
          forceAllowedTimes: {
@@ -754,6 +761,12 @@ export default {
          resultVal: 1,
          slug: null,
          minPrice: null,
+         businessLocation: {
+            date: null,
+            hour: null,
+            time: null,
+            diff: null,
+         }
       }
    },
 
@@ -780,38 +793,64 @@ export default {
          userCurrency: "map/selectedCurrency",
       }),
    },
-   async asyncData({ $axios, route, store }) {
+   async asyncData({ $axios, route, store, redirect }) {
       const { data } = await $axios.get(
          `/branches/user/${route.params.slug}?currency=${store.getters["home/currency"]}`
       )
-      let packages = {}
-      let i = 0
-      data.lockers.forEach((element) => {
-         if (element.prices) {
-            element.prices.forEach((price) => {
-               let period = price.range_start + " - " + price.range_end
-               if (Object.values(packages).indexOf(period) < 0) {
-                  packages[i++] = period
-               }
-            })
+      try{
+         let packages = {}
+         let i = 0
+         data.lockers.forEach((element) => {
+            if (element.prices) {
+               element.prices.forEach((price) => {
+                  let period = price.range_start + " - " + price.range_end
+                  if (Object.values(packages).indexOf(period) < 0) {
+                     packages[i++] = period
+                  }
+               })
+            }
+         })
+         return {
+            packages: packages,
+            branch: data.branch,
+            lockers: data.lockers,
+            lockerTypeCount: [
+               {
+                  size_id: data.lockers[0]?.size?.id || null,
+                  count: 1,
+               },
+            ],
+            recommended: data.recommended,
+            branch_id: data.branch.id,
          }
-      })
-      return {
-         packages: packages,
-         branch: data.branch,
-         lockers: data.lockers,
-         lockerTypeCount: [
-            {
-               size_id: data.lockers[0]?.size?.id || null,
-               count: 1,
-            },
-         ],
-         recommended: data.recommended,
-         branch_id: data.branch.id,
+
+      }catch (e) {
+         redirect(301, '/404')
       }
    },
 
    methods: {
+      prepareMetaTitle(branch){
+         if(branch.meta_title.en){
+            return branch.meta_title;
+         }else{
+            return branch.name;
+         }
+      },
+      prepareMetaDescription(branch){
+         if(branch.meta_description.en){
+            return branch.meta_description;
+         }else{
+            return branch.description;
+         }
+      },
+      prepareMetaDescription(branch){
+         if(branch.meta_description.en){
+            return branch.meta_description;
+         }else{
+            return branch.description;
+         }
+      },
       int(i) {
          return Number(i)
       },
@@ -969,8 +1008,12 @@ export default {
          this.timesStart = []
          this.dateRange.endTime = null
          this.dateRange.startTime = null
+         let startHour = this.forceAllowedTimes.startDate.start
+         if (this.dateRange.startDate == this.businessLocation.date){
+            startHour = parseInt(this.businessLocation.hour) + 1 // +1 hour for reserve and accurance
+         }
          for (
-            let i = this.forceAllowedTimes.startDate.start;
+            let i = startHour;
             i < this.forceAllowedTimes.startDate.end - 1;
             i++
          ) {
@@ -983,17 +1026,19 @@ export default {
             }
             this.dateRange.startTime = start || this.timesStart[0] || null
          }
-         if (!start) {
+         if (!start && this.dateRange.startTime !== null) {
             start = this.dateRange.startTime
          }
          this.timesEnd = []
          let time = start.split(":")
+
          let h = parseInt(time[0]) + 1
          let m = time[1]
+
          if (this.dateRange.endDate !== this.dateRange.startDate) {
             h = this.forceAllowedTimes.endDate.start
          }
-         for (let i = h; i < this.forceAllowedTimes.endDate.end; i++) {
+         for (let i = h; i <= this.forceAllowedTimes.endDate.end; i++) {
             if (i < 10) {
                h = "0" + i
             } else {
@@ -1010,7 +1055,7 @@ export default {
          this.submit()
       },
 
-      validateBookingTime(type) {
+      validateBookingTime(type, initialLoad = false) {
          let openingHours = this.branch.opening_times
          let selectedDate = null
          if (type == "startDate") {
@@ -1034,7 +1079,22 @@ export default {
             }
          })
          this.times()
+         if (!initialLoad){
+            this.submit()
+         }
       },
+
+      scrollBookNow() {
+         document.querySelector('#bookNow').scrollIntoView()
+      },
+
+      scrollListener() {
+         if(window.scrollY > 700) {
+            document.querySelector('.mobile-booknow').classList.add('visible');
+         } else {
+            document.querySelector('.mobile-booknow').classList.remove('visible');
+         }
+      }
    },
 
    mounted() {
@@ -1049,10 +1109,24 @@ export default {
             }
          })
       }
-      this.validateBookingTime('startDate')
-      this.validateBookingTime('endDate')
+      this.businessLocation = {
+            date: moment(new Date()).tz(this.branch.business.timezone).format('YYYY-MM-DD'),
+            hour: moment(new Date()).tz(this.branch.business.timezone).format('H'),
+            time: moment(new Date()).tz(this.branch.business.timezone).format('HH:MM'),
+            diff: moment(new Date()).tz(this.branch.business.timezone).format('Z'),
+      }
+      // check business location difference between current user location 
+      // if (parseInt(this.businessLocation.diff) > parseInt(this.dateRange.diff)){ 
+         this.startMinDate = this.businessLocation.date
+         this.dateRange.startDate = this.businessLocation.date
+         this.dateRange.endDate = this.businessLocation.date
+         this.dateRange.startTime = this.businessLocation.time
+         this.dateRange.endTime = this.businessLocation.time
+      // }
+      this.validateBookingTime('startDate', true)
+      this.validateBookingTime('endDate', true)
       this.submit()
-
+      window.addEventListener('scroll', this.scrollListener)
    },
 }
 </script>

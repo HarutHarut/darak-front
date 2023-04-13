@@ -24,24 +24,65 @@
                       </p>
                     </b-form-group>
                   </b-col>
+
                   <b-col sm="6">
                     <b-form-group
                         :label="$t('dashboard.fields.phone')"
                         label-for="input-2"
                         description=""
                     >
-                      <b-form-input
-                          id="input-2"
-                          v-model="business.phone"
-                          placeholder=""
-                          type="text"
-                          required
-                      ></b-form-input>
+                      <vue-phone-number-input
+                              id="phone"
+                              name="phone"
+                              v-model="business.phone"
+                              :default-country-code="countryCode"
+                              required
+                              error-color="#FF0000"
+                              clearable
+                              :translations="translations"
+                              @update="changeCountry"
+                              color="#FF0000"
+                      />
                       <p class="error-text" v-if="errors.phone">
                         {{ errors.phone['0'] }}
                       </p>
                     </b-form-group>
                   </b-col>
+
+                  <b-col sm="6">
+                    <b-form-group
+                            :label="$t('dashboard.fields.email')"
+                            label-for="input-1">
+                      <b-form-input
+                              id="input-1"
+                              v-model="business.email"
+                              type="email"
+                              placeholder=""
+                              required
+                      ></b-form-input>
+                      <p class="error-text" v-if="errors.email">
+                        {{ errors.email['0'] }}
+                      </p>
+                    </b-form-group>
+                  </b-col>
+
+                  <b-col sm="6">
+                    <template>
+                      <b-form-group
+                              :label="$t('dashboard.fields.currency')"
+                              label-for="input-4"
+                              description=""
+                      >
+                        <div class="mb-3">
+                          <b-form-select v-model="business.currency" :options="optionsCurrency"></b-form-select>
+                        </div>
+                        <p class="error-text" v-if="errors.currency">
+                          {{ errors.currency['0'] }}
+                        </p>
+                      </b-form-group>
+                    </template>
+                  </b-col>
+
                   <b-col sm="6">
                     <b-form-group
                         :label="$t('dashboard.fields.address')"
@@ -72,17 +113,21 @@
                       </p>
                     </b-form-group>
                   </b-col>
+
                   <b-col sm="6">
                     <template>
                       <b-form-group
-                          :label="$t('dashboard.fields.currency')"
-                          label-for="input-4"
-                          description=""
+                              :label="$t('dashboard.fields.timezone')"
+                              label-for="input-4"
+                              description=""
                       >
                         <div class="mb-3">
-                          <b-form-select v-model="business.currency" :options="optionsCurrency"></b-form-select>
+                          <model-select :options="timezoneOptions"
+                                        v-model="business.timezone"
+                          >
+                          </model-select>
                         </div>
-                        <p class="error-text" v-if="errors.currency">
+                        <p class="error-text" v-if="errors.timezone">
                           {{ errors.currency['0'] }}
                         </p>
                       </b-form-group>
@@ -123,13 +168,24 @@
 <script>
 
 import moment from "moment";
+import global from "~/mixins/global.js"
+import VuePhoneNumberInput from 'vue-phone-number-input'
+import 'vue-phone-number-input/dist/vue-phone-number-input.css'
+import 'vue-search-select/dist/VueSearchSelect.css'
+import { ModelSelect } from 'vue-search-select'
 
 export default {
   props: {
     // 'business' :
   },
+  mixins: [global],
+  components: {
+    VuePhoneNumberInput,
+    ModelSelect
+  },
   data() {
     return {
+      countryCode: 'AM',
       errors: {},
       form: {
         preview: null,
@@ -156,8 +212,17 @@ export default {
         {value: 'EUR', text: 'EUR'},
         {value: 'RUB', text: 'RUB'},
         {value: 'USD', text: 'USD'},
+        {value: 'GBP', text: 'GBP'},
+        {value: 'GEL', text: 'GEL'},
       ],
+      translations: {
+        example: this.$t("phoneNumber.example"),
+        countrySelectorLabel: this.$t("phoneNumber.countrySelectorLabel"),
+        countrySelectorError: this.$t("phoneNumber.countrySelectorError"),
+        phoneNumberLabel: this.$t("form.input.tel"),
+      },
       test: {},
+      timezoneOptions: []
       // loading: false
     }
   },
@@ -175,6 +240,10 @@ export default {
       this.business.lng = Number(e.geometry.location.lng());
       this.business.address = e.formatted_address;
     },
+    changeCountry(event){
+      this.business.phone_country = event.countryCode;
+      this.business.phone_code = '+' + event.countryCallingCode;
+    },
     onSubmit(event) {
       const formData = new FormData()
       const config = {
@@ -187,7 +256,11 @@ export default {
       }
       formData.append("id",this.business.id);
       formData.append("name",this.business.name);
+      formData.append("email",this.business.email);
       formData.append('phone',this.business.phone);
+      formData.append('phone_country',this.business.phone_country);
+      formData.append('phone_code',this.business.phone_code);
+      formData.append('timezone',this.business.timezone);
       if (this.business.currency){
         formData.append('currency',this.business.currency);
       }else{
@@ -246,7 +319,11 @@ export default {
   },
   mounted() {
     this.business = this.form;
+    this.timezoneOptions = this.business.timezoneOptions;
     this.business.name = this.business.name.en;
+    if (this.business.country_code){
+      this.countryCode = JSON.parse(this.business.country_code).country
+    }
   },
   filters: {
     getTransValue(val, lang) {

@@ -19,13 +19,13 @@
                         <ul class="card-list">
                             <li>
                                <a href="#" class="user-link d-flex justify-content-between">
-                                    <img :src="require('@/assets/img/user.png')" alt="" class="user-avatar" />
+                                    <img :src="require('@/assets/img/user.png')" alt="user avatar" class="user-avatar" />
                                     <span class="user-name">Test Name</span>
                                </a>
                             </li>
                             <li>
                                 <a href="" class="user-link d-flex justify-content-between">
-                                    <img :src="require('@/assets/img/user.png')" alt="" class="user-avatar" />
+                                    <img :src="require('@/assets/img/user.png')" alt="user avatar" class="user-avatar" />
                                     <span class="user-name">Test Name</span>
                                 </a>
                             </li>

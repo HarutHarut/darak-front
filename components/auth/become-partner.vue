@@ -65,6 +65,22 @@
           </div>
           <p class="error-text mt-1" v-if="errorResponce.business_name">{{ errorResponce.business_name }}</p>
         </div>
+<!--        <div class="form-group">-->
+<!--          <b-form-select-->
+<!--                  v-model="form.timezone"-->
+<!--          >-->
+<!--            <template v-for="(item, index) in optionsTime">-->
+<!--              <b-select-option-->
+<!--                      v-if="index != (optionsTime.length - 1)"-->
+<!--                      :key="index"-->
+<!--                      :value="item.value"-->
+<!--              >-->
+<!--                {{ item.text }}-->
+<!--              </b-select-option>-->
+<!--            </template>-->
+<!--          </b-form-select>-->
+<!--          <p class="error-text mt-1" v-if="errorResponce.business_name">{{ errorResponce.business_name }}</p>-->
+<!--        </div>-->
 
         <div class="form-group">
             <vue-phone-number-input
@@ -121,15 +137,15 @@
           </label>
           <p class="error-text mt-1" v-if="errorResponce.privacy_policy">{{ errorResponce.privacy_policy }}*</p>
         </div>
-        <div class="form-group">
-          <b-form-input
-              id="timezone"
-              v-model="form.timezone"
-              class="d-none"
-              type="text"
-              name="timezone"
-          ></b-form-input>
-        </div>
+<!--        <div class="form-group">-->
+<!--          <b-form-input-->
+<!--              id="timezone"-->
+<!--              v-model="form.timezone"-->
+<!--              class="d-none"-->
+<!--              type="text"-->
+<!--              name="timezone"-->
+<!--          ></b-form-input>-->
+<!--        </div>-->
         <button class="btn btn-block btn-blue" type="submit">
           {{ $t("form.register") }}
         </button>
@@ -162,6 +178,9 @@ export default {
   data() {
     return {
       //phoneNumber: null,
+      // optionsTime: [
+      //
+      // ],
       timezones: {},
       form: {
         name: null,
@@ -192,6 +211,7 @@ export default {
         example: this.$t("phoneNumber.example"),
         countrySelectorLabel: this.$t("phoneNumber.countrySelectorLabel"),
         countrySelectorError: this.$t("phoneNumber.countrySelectorError"),
+        phoneNumberLabel: this.$t("form.input.tel"),
       },
     }
   },

@@ -35,6 +35,16 @@
               </li>
             </ul>
           </b-col>
+
+
+          <b-col lg="8">
+            <h2 class="title-secondary text-center">
+              {{ $t("list.contactUs") }}
+            </h2>
+            <p class="w-75 mx-auto text-center mb-5">{{ $t('list.contactUsText')}}</p>
+          </b-col>
+
+
           <b-col lg="8">
             <div class="form-box">
               <h2 class="title-secondary text-center ">
@@ -108,11 +118,12 @@
                           class="input phone-number-input"
                           :label="$t('form.input.tel')"
                           label-for="input-2"
+                          :placeholder="$t('form.input.tel')"
                           description=""
                       >
                         <validation-provider v-slot="validationContext"
                                              :rules="{ required: false, max: 255}"
-                                             name="Phone">
+                                             name="Phone" placeholder="asjfhj">
                           <vue-phone-number-input
                               v-model="form.phone"
                               class="form-input"
@@ -160,13 +171,13 @@
                     <b-col sm="6">
                       <b-form-group
                           class="input"
-                          label="Address"
+                          :label="$t('form.input.address')"
                           label-for="input-4"
                           description=""
                       >
                         <b-form-input
                             v-model="form.address"
-                            placeholder="Address"
+                            :placeholder="$t('form.input.address')"
                             class="form-input"
                         ></b-form-input>
                       </b-form-group>
@@ -214,8 +225,8 @@
         :meta_title="$t('meta.contactUsTitle')"
         :meta_keywords="$t('meta.contactUsKeywords')"
         :meta_description="$t('meta.contactUsDescription')"
-        :og_image="image"
-        :twitter_image="'/_nuxt/assets/img/logo/logo-black-text.png'"
+        :og_image="this.$config.cdnUrl + '/img/contact-us.jpg' ? this.$config.cdnUrl + '/img/contact-us.jpg' : this.$config.cdnUrl + '/img/logo.jpg'"
+        :twitter_image="this.$config.cdnUrl + '/img/contact-us.jpg' ? this.$config.cdnUrl + '/img/contact-us.jpg' : this.$config.cdnUrl + '/img/logo.jpg'"
     >
     </Seo>
   </div>
@@ -243,8 +254,8 @@ export default {
         example: this.$t("phoneNumber.example"),
         countrySelectorLabel: this.$t("phoneNumber.countrySelectorLabel"),
         countrySelectorError: this.$t("phoneNumber.countrySelectorError"),
+        phoneNumberLabel: this.$t("form.input.tel"),
       },
-
       form: {
         name: null,
         last_name: null,

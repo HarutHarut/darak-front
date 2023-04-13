@@ -9,6 +9,7 @@
         <b-col xl="7" lg="9">
           <div class="base-card card mb-3">
             <div class="card-body">
+              <a :href="'/pdf/Questions texts_' + $i18n.locale + '.pdf'" target="_blank" class="pdf-link">{{ $t("dashboard.title.howToUse") }}</a>
               <h2 class="title-secondary text-center ">
                 {{ $t("dashboard.add.branch") }}
               </h2>
@@ -472,6 +473,7 @@ export default {
         example: this.$t("phoneNumber.example"),
         countrySelectorLabel: this.$t("phoneNumber.countrySelectorLabel"),
         countrySelectorError: this.$t("phoneNumber.countrySelectorError"),
+        phoneNumberLabel: this.$t("form.input.tel"),
       },
     }
   },
@@ -605,8 +607,10 @@ export default {
       formData.append("logo", this.form.logo)
 
       for (let previewKey in media) {
-        formData.append(`media[${previewKey}]`, media[previewKey].file)
-        formData.append(`mediaKey[${previewKey}]`, media[previewKey].default)
+        formData.append(`media[${previewKey}]`,
+                media[previewKey].file)
+        formData.append(`mediaKey[${previewKey}]`,
+                media[previewKey].default)
       }
       let data = formData
       this.$axios
@@ -616,7 +620,7 @@ export default {
             }
           })
           .then(response => {
-            // this.$router.push('/dashboard/branches')/
+            this.$router.push('/dashboard/branches')
           })
           .catch(error => {
             console.log(error.response.data)

@@ -10,7 +10,7 @@
                         v-for="(day, index) in formData"
                         v-bind:key="index"
                      >
-                        <b-col lg="3" sm="12" class="mb-2">
+                        <b-col class="mb-2">
                            <b-form-checkbox
                               v-model="day.status"
                            >
@@ -54,7 +54,7 @@
             <button type="submit" class="btn btn-blue btn-form mb-2">
                {{ $t("dashboard.btn.submit") }}
             </button>
-            <button type="button"  @click="openingNext"  class="btn btn-success btn-form float-right">
+            <button v-if="nextButtonShow" type="button"  @click="openingNext"  class="btn btn-success btn-form float-right">
                {{ $t("dashboard.btn.openingHoursNext") }}
             </button>
          </b-form>
@@ -68,6 +68,7 @@ export default {
    props: ["form"],
    data() {
       return {
+         nextButtonShow: false,
          optionsTime: [
             { value: "00:00:00", text: "00:00" },
             { value: "01:00:00", text: "01:00" },
@@ -175,6 +176,7 @@ export default {
       }
    },
    mounted() {
+      let url = window.location.href;
       if (this.form.length) {
          this.formData = JSON.parse(JSON.stringify(this.form))
 
@@ -186,6 +188,9 @@ export default {
          })
       } else {
          this.formData = this.openTimeForm
+      }
+      if (url.includes('#')){
+         this.nextButtonShow = true;
       }
    }
 }

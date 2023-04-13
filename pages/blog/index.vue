@@ -55,8 +55,8 @@
            :meta_title="$t('meta.blogTitle')"
            :meta_keywords="$t('meta.blogKeywords')"
            :meta_description="$t('meta.blogDescription')"
-           :og_image="image"
-           :twitter_image="'/_nuxt/assets/img/logo/logo-black-text.png'"
+           :og_image="image ? image : this.$config.cdnUrl + '/img/logo.jpg'"
+           :twitter_image="image ? image : this.$config.cdnUrl + '/img/logo.jpg'"
       >
       </Seo>
    </div>

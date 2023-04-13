@@ -46,4 +46,13 @@
             fill: $color-grey-light-1;
         }
     }
+.search-form {
+        svg {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 10px;
+            cursor: pointer;
+        }
+    }
 }

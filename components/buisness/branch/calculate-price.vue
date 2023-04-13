@@ -29,7 +29,7 @@
                            <b-col sm="6">
                               <div class="mb-3">
                                  <p class="mb-2">
-                                    Locker
+                                    {{ $t('title.lockerName') }}
                                  </p>
                                  <validation-provider
                                     v-slot="validationContext"
@@ -42,8 +42,7 @@
                                        class="mb-3"
                                     >
                                        <b-form-select-option :value="null"
-                                          >Please select a
-                                          locker</b-form-select-option
+                                          >{{$t('form.PleaseSelectLocker')}}</b-form-select-option
                                        >
                                        <b-form-select-option
                                           :value="locker.id"

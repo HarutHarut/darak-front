@@ -12,19 +12,19 @@
                <p>{{ branch.city.name }}</p>
             </li>
             <li class="d-flex justify-content-between">
-               <p class="item-title">Address</p>
+               <p class="item-title">{{$t('dashboard.fields.address')}}</p>
                <p class="text-right pl-3">{{ branch.address }}</p>
             </li>
             <li class="d-flex justify-content-between">
                <p class="item-title">{{ $t("dashboard.statuses.title") }}</p>
-               <p v-if="branch.status === 1">Active</p>
-               <p v-else>Inactive</p>
+               <p v-if="branch.status === 1">{{ $t("dashboard.statuses.active") }}</p>
+               <p v-else>{{ $t("dashboard.statuses.inActive") }}</p>
             </li>
             <li class="d-flex justify-content-between">
                <p class="item-title">
                {{ $t("dashboard.statuses.verified") }}</p>
-               <p v-if="branch.working_status == 1">Yes</p>
-               <p v-else>No</p>
+               <p v-if="branch.working_status == 1">{{ $t("form.btn.Yes") }}</p>
+               <p v-else>{{ $t("form.btn.No") }}</p>
             </li>
             <li class="d-flex justify-content-between">
                <p class="item-title">
@@ -32,10 +32,10 @@
                <p>{{branch.created_at | changeDataFormat}}</p>
             </li>
          </ul>
-         <NuxtLink v-if="admin" :to="`/dashboard/branches/edit/${branch.slug}`" class="btn btn-color btn-edit pt-1">
+         <NuxtLink v-if="admin" :to="prepareUrl('/dashboard/branches/edit/' + branch.slug)" class="btn btn-color btn-edit pt-1">
             <svg-icon class="base-icon" name="edit"></svg-icon>
          </NuxtLink>
-        <NuxtLink v-else :to="`/office/branches/edit/${branch.slug}`" class="btn btn-color btn-edit pt-1">
+        <NuxtLink v-else :to="prepareUrl(`/office/branches/edit/${branch.slug}`)" class="btn btn-color btn-edit pt-1">
           <svg-icon class="base-icon" name="edit"></svg-icon>
         </NuxtLink>
       </div>
@@ -44,8 +44,10 @@
 
 <script>
 import moment from "moment";
+import global from "~/mixins/global.js"
 
 export default {
+   mixins: [global],
    name: "branch-card",
    props: ['branch', 'admin'],
    filters: {

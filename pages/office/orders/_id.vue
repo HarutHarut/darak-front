@@ -64,7 +64,7 @@ export default {
 
     filters:{
         dateTable(val) {
-            const date = moment(val).format('D MMMM YYYY, h:mm:ss ')
+            const date = moment(val).format('D MMMM YYYY, HH:mm:ss')
             return date.toString()
         },
 

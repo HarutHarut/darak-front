@@ -16,6 +16,7 @@
 html,
 body {
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 .form-control {
@@ -456,6 +457,60 @@ h2 {
     }
 }
 
-.cool-lightbox {
-    margin-top: 80px;
+#modal-sign___BV_modal_outer_ {
+    z-index: 999 !important;
+}
+
+.branch-status-radio {
+    .custom-radio {
+        margin-right: 12px;
+    }
+}
+
+.terms-section ol li {
+    padding-left: 5px !important;
+    list-style-type: auto !important;
+    &:before {
+        display: none !important;
+    }
+}
+
+.top-0 {
+    top: 0px;
+}
+
+.mobile-booknow {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 10px;
+    background: $color-white;
+    box-shadow: 0 0 7px rgb(0 0 0 / 16%);
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transition: 0.5s;
+    display: none;
+    @media (max-width: 767px) {
+        display: block;
+    }
+    button {
+        font-size: 20px;
+        padding: 10px 40px;
+        width: 100%;
+    }
+    &.visible {
+        opacity: 1;
+    }
+}
+
+.place-info {
+    ol li {
+        list-style-type: decimal;
+    }
+    ul li {
+        list-style-type: disc;
+    }
 }

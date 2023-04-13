@@ -82,11 +82,10 @@
 
                         if (form.type == 1)
                             {
-                                // let path = this.prepareUrl(`/office/lockers/` + id);
-                                // this.$router.push({
-                                //     path: path,
-                                // })
-                                this.$router.back();
+                                let path = this.prepareUrl(`/office/branches/` + this.lockerBranch.slug);
+                                this.$router.push({
+                                    path: path,
+                                })
                             }
                         else
                             {

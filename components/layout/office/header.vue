@@ -2,7 +2,7 @@
    <header class="office-header d-flex justify-content-between">
         <div class="logo-box d-flex align-items-center justify-content-center justify-content-lg-between p-3">
             <NuxtLink :to="prepareUrl('/')" class="logo-img mr-3">
-                <img :src="require('@/assets/img/logo/logo-white-text.png')" class="logo-img img-fluid" alt="" />
+                <img :src="require('@/assets/img/logo/logo-white-text.png')" class="logo-img img-fluid" alt="logo" />
             </NuxtLink>
             <button type="button" @click="$emit('toggleNav')" class="menu-burger">
                 <svg-icon class="base-icon" name="menu"></svg-icon>
@@ -23,7 +23,7 @@
                 <template #button-content>
                     <img
                             :src="require('@/assets/img/lang/' + flag)"
-                            alt=""
+                            alt="flag"
                             class="lang-img"
                     />
                 </template>
@@ -33,7 +33,7 @@
                 >
                     <img
                             :src="require('@/assets/img/lang/united-kingdom.png')"
-                            alt=""
+                            alt="united kingdom"
                             class="lang-img"
                     />
                 </b-dropdown-item>
@@ -43,7 +43,7 @@
                 >
                     <img
                             :src="require('@/assets/img/lang/armenia.png')"
-                            alt=""
+                            alt="armenia"
                             class="lang-img"
                     />
                 </b-dropdown-item>
@@ -53,7 +53,7 @@
                 >
                     <img
                             :src="require('@/assets/img/lang/russia.png')"
-                            alt=""
+                            alt="russia"
                             class="lang-img"
                     />
                 </b-dropdown-item>
@@ -63,7 +63,7 @@
                 >
                     <img
                             :src="require('@/assets/img/lang/france.png')"
-                            alt=""
+                            alt="france"
                             class="lang-img"
                     />
                 </b-dropdown-item>
@@ -74,7 +74,7 @@
                 >
                     <img
                             :src="require('@/assets/img/lang/china.png')"
-                            alt=""
+                            alt="china"
                             class="lang-img"
                     />
                 </b-dropdown-item>

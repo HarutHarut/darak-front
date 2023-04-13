@@ -14,7 +14,7 @@
                             <p>{{ $t("form.signUpText") }}</p>
                         </div>
                         <div class="img-box mt-auto">
-                            <img :src="require('@/assets/img/logo/logo-white-text.png')" class="img-fluid" alt=""/>
+                            <img :src="require('@/assets/img/logo/logo-white-text.png')" class="img-fluid" alt="logo"/>
                         </div>
                     </div>
                 </b-col>
@@ -78,7 +78,6 @@
                         this.$auth.setUser(response.data.user)
                         this.$auth.setUserToken(response.data.access_token, response.data.refresh_token)
                         const {user} = this.$auth;
-                        console.log("user", user)
                         this.$bvModal.hide('modal-sign');
                         switch (user.role.name) {
                             case "business_owner":

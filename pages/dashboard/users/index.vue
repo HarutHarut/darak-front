@@ -19,8 +19,10 @@
               <b-tr>
                 <b-th>{{ $t("dashboard.fields.name") }}</b-th>
                 <b-th>{{ $t("dashboard.fields.email") }}</b-th>
+                <b-th>{{ $t("dashboard.statuses.email_verified") }}</b-th>
                 <b-th>{{ $t("dashboard.fields.orderCount") }}</b-th>
-                <b-th>{{ $t("dashboard.statuses.verified") }}</b-th>
+                <b-th>{{ $t("dashboard.statuses.isActive") }}</b-th>
+<!--                <b-th>{{ $t("dashboard.statuses.blocked") }}</b-th>-->
                 <b-th>{{ $t("dashboard.fields.isBusiness") }}</b-th>
                 <b-th class="p-1">{{ $t("dashboard.fields.actions") }}</b-th>
               </b-tr>
@@ -38,11 +40,19 @@
                   </NuxtLink>
                 </b-td>
                 <b-td>{{ user.email }}</b-td>
+                <b-td v-if="user.email_verified_at && user.email_verified_at !== null">{{ $t("dashboard.list.Yes") }}</b-td>
+                <b-td v-else>{{ $t("dashboard.list.No") }}</b-td>
                 <b-td>{{ user.bookings_count }}</b-td>
                 <b-td class="status">
-                  <button @click="changeStatus(user.status, user.id)" class="status-order completed" v-if="user.status === 1">{{ $t("dashboard.statuses.active") }}</button>
-                  <button @click="changeStatus(user.status, user.id)" class="status-order canceled" v-else>{{ $t("dashboard.statuses.inActive") }}</button>
+                  <p v-if="user.status === 1">{{ $t("dashboard.list.Yes") }}</p>
+                  <p v-else>{{ $t("dashboard.list.No") }}</p>
+<!--                  <button @click="changeStatus(user.status, user.id)" class="status-order completed" v-if="user.status === 1">{{ $t("dashboard.statuses.active") }}</button>-->
+<!--                  <button @click="changeStatus(user.status, user.id)" class="status-order canceled" v-else>{{ $t("dashboard.statuses.inActive") }}</button>-->
                 </b-td>
+<!--                <b-td class="status">-->
+<!--                  <p v-if="user.status === 2">{{ $t("dashboard.list.Yes") }}</p>-->
+<!--                  <p v-else>{{ $t("dashboard.list.No") }}</p>-->
+<!--                </b-td>-->
                 <b-td>
                   <button type="button">
                     <span v-if="user.role.name === 'business_owner' && user.business">
@@ -50,18 +60,26 @@
                           {{ user.business.name | getTransValue($i18n.locale) }}
                       </NuxtLink>
                     </span>
-                    <span v-else>{{ $t("dashboard.fields.No") }}</span>
+                    <span v-else>{{ $t("dashboard.fields.no") }}</span>
                   </button>
                 </b-td>
                 <b-td class="cancel-cell">
-<!--                  <button type="button">-->
-<!--                    <a href="#" @click="destroy(user.id)">-->
-<!--                      <svg-icon-->
-<!--                          class="sm-icon icon-cancel"-->
-<!--                          name="cancel">-->
-<!--                      </svg-icon>-->
-<!--                    </a>-->
-<!--                  </button>-->
+                    <div class="d-flex justify-content-center align-items-center">
+                      <div>
+                        <span>
+                          <span v-if="user.status === 0 || user.status === 2" class="view-cell">
+                             <button @click="changeStatus(user.status, user.id)">
+                                <svg-icon class="base-icon" name="add-button"/>
+                             </button>
+                          </span>
+                          <span v-else class="cancel-cell">
+                             <button @click="changeStatus(user.status, user.id)">
+                                <svg-icon class="base-icon" name="close"/>
+                             </button>
+                          </span>
+                       </span>
+                      </div>
+                    </div>
                 </b-td>
               </b-tr>
             </b-tbody>
@@ -126,7 +144,9 @@ export default {
       image: "users",
       perPage: 15,
       deleteId: null,
-
+      currentPage: 1,
+      total: 0,
+      searchText: null,
     };
   },
 
@@ -160,23 +180,35 @@ export default {
           .catch(e => {})
     },
     search(val) {
-      this.$axios.post('/user/search', {'search': val}).then(({data: {users}}) => {
-        this.currentPage = users.current_page
-        this.total = users.total
-        this.users = users.data
-      })
+      this.searchText = val;
+      this.getUsers();
     },
     getUsers(page = 1) {
       this.$nextTick(() => {
         this.$nuxt.$loading.start()
       })
+
       this.$axios
-          .get(`/admin/users?page=${page}&perPage=15`)
+          .get(`/admin/users?page=${page}&search=${this.searchText}`, {
+            params: {
+              currentPage: this.currentPage,
+              per_page: this.per_page,
+              filter: {
+                status: 1
+              }
+            }
+          })
           .then(({data: {users}}) => {
-            console.log(users)
             this.currentPage = users.current_page
             this.total = users.total
             this.users = users.data
+            this.$router.replace({
+              query:
+                      {
+                        page: `${this.currentPage}`,
+                        search: `${this.searchText}`,
+                      }
+            });
           })
           .catch(e => {
             console.log(e)
@@ -193,7 +225,7 @@ export default {
                 status: status
               })
               .then((res) => {
-                this.getUsers();
+                this.getUsers(this.currentPage);
               })
     },
 
@@ -222,7 +254,9 @@ export default {
 
   },
   mounted() {
-    this.getUsers()
+    let page = this.$route.query.page || 1;
+    this.searchText = this.$route.query.search || '';
+    this.getUsers(page)
   },
   filters: {
     getTransValue(val, lang) {

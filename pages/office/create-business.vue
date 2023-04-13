@@ -107,6 +107,23 @@
                       </p>
                     </b-form-group>
                   </b-col>
+
+                  <b-col sm="6">
+                    <template>
+                      <b-form-group
+                              :label="$t('dashboard.fields.timezone')"
+                              label-for="input-4"
+                              description=""
+                      >
+                        <div class="mb-3">
+                           <model-select v-model="business.timezone" :options="timezoneOptions"></model-select>
+                        </div>
+                        <p class="error-text" v-if="errors.timezone">
+                          {{ errors.currency['0'] }}
+                        </p>
+                      </b-form-group>
+                    </template>
+                  </b-col>
                 </b-row>
                 <b-row>
                   <b-col>
@@ -145,11 +162,14 @@ import moment from "moment";
 import global from "~/mixins/global.js"
 import VuePhoneNumberInput from 'vue-phone-number-input'
 import 'vue-phone-number-input/dist/vue-phone-number-input.css'
+import 'vue-search-select/dist/VueSearchSelect.css'
+import { ModelSelect } from 'vue-search-select'
 
 export default {
   mixins: [global],
   components: {
-    VuePhoneNumberInput
+    VuePhoneNumberInput,
+    ModelSelect
   },
 
   data() {
@@ -179,11 +199,15 @@ export default {
         {value: 'EUR', text: 'EUR'},
         {value: 'RUB', text: 'RUB'},
         {value: 'USD', text: 'USD'},
+        {value: 'GBP', text: 'GBP'},
+        {value: 'GEL', text: 'GEL'},
       ],
+      timezoneOptions: [],
       translations: {
           example: this.$t("phoneNumber.example"),
           countrySelectorLabel: this.$t("phoneNumber.countrySelectorLabel"),
           countrySelectorError: this.$t("phoneNumber.countrySelectorError"),
+          phoneNumberLabel: this.$t("form.input.tel"),
       },
       loading: false
     }
@@ -222,6 +246,9 @@ export default {
       }
       if (this.business.address){
         formData.append('address',this.business.address);
+      }
+      if (this.business.timezone){
+        formData.append('timezone',this.business.timezone);
       }
       formData.append('_method', 'put');
       this.$axios.post('/business/update', formData, config).then((res) => {
@@ -282,6 +309,7 @@ export default {
     }
     this.$axios.get('/business').then((res) => {
       this.loading = true;
+      this.timezoneOptions = res.data.timezoneOptions;
       this.business = res.data;
       this.name = res.data.name.en;
       if (this.business.currency === null) {

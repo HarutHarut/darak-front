@@ -40,6 +40,12 @@
       </section>
       <section class="py-4 py-lg-5">
         <h2 class="title-secondary text-center">
+          {{ $t("list.partner") }}
+        </h2>
+        <p class="w-75 mx-auto text-center">{{ $t('list.partnerText')}}</p>
+      </section>
+      <section class="py-4 py-lg-5">
+        <h2 class="title-secondary text-center">
           {{ $t("title.ourPartners") }}
         </h2>
         <b-row>
@@ -82,7 +88,7 @@
               <div class="img-box mt-auto">
                 <img :src="require('@/assets/img/logo/logo-white-text.png')"
                      class="img-fluid"
-                     alt=""/>
+                     alt="logo" />
               </div>
             </div>
           </b-col>
@@ -128,7 +134,7 @@ export default {
         "partner01.png",
         "partner02.png",
         "partner03.png",
-        "partner01.png"
+        "partner04.png"
       ]
     }
   },

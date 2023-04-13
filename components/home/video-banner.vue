@@ -22,7 +22,7 @@
                             <h1 class="title-primary">{{ $t("home.mainTitle") }}...</h1>
                             <p class="subtitle-primary">{{ $t("home.subTitle") }}</p>
                             <div class="search-form-book d-flex mx-auto">
-                                <form action="#"
+                                <div
                                       class="search-form d-flex flex-wrap justify-content-center flex-grow-1">
                                     <div class="form-input d-flex">
                                         <label for="search-input" class="search-location">
@@ -43,7 +43,7 @@
                                                 class="btn-color btn btn-search">{{ $t("form.find") }}
                                         </button>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </b-col>
@@ -85,6 +85,7 @@
             setPlace(event) {
                 console.log("event", event)
                 this.searchText = event
+                this.searchInHomePage()
             },
             searchInHomePage() {
                 if (!this.searchText & !this.lng & !this.lat) {

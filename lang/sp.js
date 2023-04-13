@@ -70,6 +70,7 @@ export default {
             businessName: "Business name",
             privacyPolicy: "Privacy Policy",
             privacyPolicyForBusiness: "Privacy Policy For Business",
+            address: "Address"
         },
         btn: {
             btnSend: "Ուղարկել",
@@ -244,7 +245,8 @@ export default {
             lockersPrices: "Պահարանների գներ",
             calculatePrice: "Հաշվեք գինը",
             calculate: "Հաշվել",
-            chart: "Գծապատկեր"
+            chart: "Գծապատկեր",
+            howToUse: "How to use"
         },
         seo: {
             seo: "SEO",
@@ -253,6 +255,28 @@ export default {
                 description: "Meta description",
                 keywords: "Meta keywords",
             }
+        },
+        tooltip: {
+            whatsapp: 'If you fill the number, it will appear in website on your page and tourists will have the opportunity to contact you with that number. It is recommended to mention the WhatsApp number so that tourists can contact you in case of questions.',
+            viber: 'If you fill the number, it will appear in website on your page and tourists will have the opportunity to contact you with that number. It is recommended to mention the Viber number so that tourists can contact you in case of questions.',
+            phone: 'If you fill the number, it will appear in website on your page and tourists will have the opportunity to contact you with that number. It is recommended to mention the phone number so that tourists can contact you in case of questions.',
+            address: 'You must fill the address of luggage storage. By moving the flag in the map below, you can specify the location of the luggage storage.',
+            email: 'Email is required. To this email will be sent from LugLockers information about bookings, booking cancellations and other notifications. The email address will not be shown on the site. You can specify different emails for each branch.',
+            status: 'Here you can change the activity status of the branch. If you select "Inactive", it will not appear on the site.',
+            cardPayment: 'If you also accept non cash payment, you must select "Yes". Otherwise, it should be marked as "No". This data will appear on the website.',
+            isBookable: 'Is Bookable?',
+            name: 'Should be filled the name of the luggage storage address. It can be the name of the hotel, hostel, shop, cafe where the items should be stored.',
+            description: 'This field is very important. Should be filled information about luggage storage place, which will enable tourists to easily find the place and get oriented when choosing the place of the storage. You should fill what famous place is near, for example, 100 meters from the metro or cultural center, etc. These fields must be filled in all languages.',
+            uploadImages: 'You need to upload pictures that will appear on your website page. It is recommended to upload at least 5 pictures. Pictures that will make it easy to find the luggage storage address',
+            uploadWallpaper: 'You must upload an image that will appear at the top of your page. The size of the image  should be maximum 5 megabytes and 600X1000 in size.',
+            size: "It is needed to choose the size of the luggage. If the prices depend on the size of the luggage, you should choose the appropriate size, «Small», «Medium» or «Large». If the prices are not depend on for the size of the luggage, you should select the option «Any size».",
+            count: "Must be filled the maximum number of mentioned size luggages that you can store. The purpose of this field is that, after making a booking, if the number of luggage to be checked in at the same time expires, the system will not allow make a booking.",
+            pricePerDay: "Filled in if prices are set per day. For example, the price for one day of luggage storage is 5 Euros. One day prices are calculated for every 24 hours. ",
+            pricePerHour: "Filled in if prices are set for every one hour. For example, the price for one hour of luggage storage is 5 Euros",
+            startTime: "Start Time",
+            endTime: "End Time",
+            price: "Price",
+            chooseBusiness: "Choose business",
         },
         fields: {
             user: "Օգտագործող",
@@ -339,6 +363,7 @@ export default {
             title: "Կարգավիճակ",
             verified: "Ստուգված",
             not_verified: "Not verified",
+            email_verified: "Email verified",
             approved: "Հաստատված",
             public: "Հրապարակային",
             canceled: "Չեղարկված",
@@ -347,6 +372,7 @@ export default {
             blocked: "Blocked",
             active: "Active",
             inActive: "Inactive",
+            isActive: "is Active",
             open: "Open",
             outOfService: "Out of service",
             cardPayment: "Card payment",
@@ -415,6 +441,7 @@ export default {
             business: "Ավելացնել բիզնես",
             sizes: "Ավելացնել չափեր",
             branch: "Ավելացնել մասնաճյուղ",
+            price: "Ավելացնել գին"
         },
         edit: {
             city: "Edit City",
@@ -461,7 +488,8 @@ export default {
             titles: {
                 action: 'Please choose action'
             }
-        }
+        },
+        title: 'Edit working days and time'
     },
     phoneNumber: {
         example: "Example :",
